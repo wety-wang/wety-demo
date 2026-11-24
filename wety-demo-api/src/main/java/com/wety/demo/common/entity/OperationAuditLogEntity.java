@@ -1,9 +1,8 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Date;
  *
  * @author wety
  */
-@ApiModel(description = "操作审计日志记录")
+@Schema(description = "操作审计日志记录")
 @Entity(name = "operation_audit_log")
 public class OperationAuditLogEntity {
 
@@ -19,85 +18,85 @@ public class OperationAuditLogEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty("操作日志唯一编码")
+    @Schema(description = "操作日志唯一编码")
     @Column(name = "code")
     private String code;
 
-    @ApiModelProperty(value = "模块编码", example = "user")
+    @Schema(description = "模块编码", example = "user")
     @Column(name = "model_code")
     private String modelCode;
 
-    @ApiModelProperty(value = "所属模块", example = "用户管理")
+    @Schema(description = "所属模块", example = "用户管理")
     @Column(name = "model_name")
     private String modelName;
 
-    @ApiModelProperty("请求路径")
+    @Schema(description = "请求路径")
     @Column(name = "path")
     private String path;
 
-    @ApiModelProperty("HTTP方法")
+    @Schema(description = "HTTP方法")
     @Column(name = "http_method")
     private String httpMethod;
 
-    @ApiModelProperty("Query字符串")
+    @Schema(description = "Query字符串")
     @Column(name = "query_string")
     private String queryString;
 
-    @ApiModelProperty("User-Agent")
+    @Schema(description = "User-Agent")
     @Column(name = "user_agent")
     private String userAgent;
 
-    @ApiModelProperty("Referer")
+    @Schema(description = "Referer")
     @Column(name = "referer")
     private String referer;
 
-    @ApiModelProperty("请求ID")
+    @Schema(description = "请求ID")
     @Column(name = "request_id")
     private String requestId;
 
-    @ApiModelProperty(value = "登录账号的code", example = "admin")
+    @Schema(description = "登录账号的code", example = "admin")
     @Column(name = "account_code")
     private String accountCode;
 
-    @ApiModelProperty("登录账号登录名")
+    @Schema(description = "登录账号登录名")
     @Column(name = "account_login_name")
     private String accountLoginName;
 
-    @ApiModelProperty("登录账号用户名")
+    @Schema(description = "登录账号用户名")
     @Column(name = "account_name")
     private String accountName;
 
     /** 操作人所属主部门编码，用于数据权限过滤。 */
-    @ApiModelProperty("操作人所属主部门编码")
+    @Schema(description = "操作人所属主部门编码")
     @Column(name = "dept_code", length = 40)
     private String deptCode;
 
-    @ApiModelProperty("客户端IP")
+    @Schema(description = "客户端IP")
     @Column(name = "client_ip")
     private String clientIp;
 
-    @ApiModelProperty("操作时间")
+    @Schema(description = "操作时间")
     @Column(name = "operation_time")
     private Date operationTime;
 
-    @ApiModelProperty(value = "操作类型", example = "create/update/delete/query")
+    @Schema(description = "操作类型", example = "create/update/delete/query")
     @Column(name = "operation_type")
     private String operationType;
 
-    @ApiModelProperty(value = "操作结果", example = "success/fail")
+    @Schema(description = "操作结果", example = "success/fail")
     @Column(name = "result")
     private String result;
 
-    @ApiModelProperty(value = "操作描述")
+    @Schema(description = "操作描述")
     @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;
 
-    @ApiModelProperty("处理耗时(ms)")
+    @Schema(description = "处理耗时(ms)")
     @Column(name = "duration_ms")
     private Long durationMs;
 
-    @ApiModelProperty("关联的登录日志编码")
-    @Column(name = "login_log_code")
+    @Schema(description = "关联的登录日志编码")
+    @Column(name = "login_log_code", length = 40)
     private String loginLogCode;
 
     public Long getId() {

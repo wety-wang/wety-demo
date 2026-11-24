@@ -12,8 +12,8 @@ import com.wety.demo.module.organization.dto.PositionStatusUpdateDTO;
 import com.wety.demo.module.organization.dto.PositionUpdateDTO;
 import com.wety.demo.module.organization.service.PositionService;
 import com.wety.demo.module.organization.vo.PositionInfoVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/bac/org/position")
-@Api(tags = "101-02-00 组织架构-岗位管理", produces = "application/json", consumes = "application/json")
+@Tag(name = "101-02-00 组织架构-岗位管理")
 @Permission(code = "101-02-00", parentCode = "101-00-00", name = "岗位管理", order = 2)
 public class PositionController {
 
@@ -43,7 +43,7 @@ public class PositionController {
      * @return 岗位分页结果
      */
     @RequestMapping(value = "/listPageable", method = RequestMethod.POST)
-    @ApiOperation(value = "分页查询岗位")
+    @Operation(summary = "分页查询岗位")
     @Permission(code = "101-02-01", parentCode = "101-02-00", name = "查看列表", leafNode = GlobalConst.YES, order = 1)
     @OperationLog(
             operationType = OperationType.QUERY,
@@ -60,7 +60,7 @@ public class PositionController {
      * @return 启用岗位列表
      */
     @GetMapping(value = "/listAll")
-    @ApiOperation(value = "查询全部启用岗位")
+    @Operation(summary = "查询全部启用岗位")
     public List<CodeNameDTO> listAll() {
         return positionService.listAll();
     }
@@ -72,7 +72,7 @@ public class PositionController {
      * @return 操作结果
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ApiOperation(value = "新增岗位")
+    @Operation(summary = "新增岗位")
     @Permission(code = "101-02-02", parentCode = "101-02-00", name = "新增岗位", leafNode = GlobalConst.YES, order = 2)
     @OperationLog(
             operationType = OperationType.CREATE,
@@ -91,7 +91,7 @@ public class PositionController {
      * @return 操作结果
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @ApiOperation(value = "修改岗位")
+    @Operation(summary = "修改岗位")
     @Permission(code = "101-02-03", parentCode = "101-02-00", name = "修改岗位", leafNode = GlobalConst.YES, order = 3)
     @OperationLog(
             operationType = OperationType.UPDATE,
@@ -110,7 +110,7 @@ public class PositionController {
      * @return 操作结果
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @ApiOperation(value = "删除岗位")
+    @Operation(summary = "删除岗位")
     @Permission(code = "101-02-04", parentCode = "101-02-00", name = "删除岗位", leafNode = GlobalConst.YES, order = 4)
     @OperationLog(
             operationType = OperationType.DELETE,
@@ -129,7 +129,7 @@ public class PositionController {
      * @return 操作结果
      */
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @ApiOperation(value = "启停岗位")
+    @Operation(summary = "启停岗位")
     @Permission(code = "101-02-05", parentCode = "101-02-00", name = "启停岗位", leafNode = GlobalConst.YES, order = 5)
     @OperationLog(
             operationType = OperationType.UPDATE,

@@ -1,20 +1,19 @@
 package com.wety.demo.module.organization.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 重置用户密码参数。
  */
-@ApiModel(value = "OrgUserResetPasswordDTO", description = "重置用户密码参数")
+@Schema(name = "OrgUserResetPasswordDTO", description = "重置用户密码参数")
 public class OrgUserResetPasswordDTO {
 
     /** 账号业务编码。 */
-    @ApiModelProperty(value = "账号业务编码", required = true)
+    @Schema(description = "账号业务编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String code;
 
     /** 新密码（前端 SM2 加密传入，后端解密后 BCrypt 存储）。 */
-    @ApiModelProperty(value = "新密码（SM2加密）", required = true)
+    @Schema(description = "新密码（SM2加密）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String newPassword;
 
     public String getCode() {

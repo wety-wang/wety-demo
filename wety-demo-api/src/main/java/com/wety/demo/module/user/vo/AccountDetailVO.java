@@ -1,24 +1,23 @@
 package com.wety.demo.module.user.vo;
 
 import com.wety.demo.common.entity.AccountEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 /**
  * @author wety
  */
-@ApiModel(description = "账户详细信息")
+@Schema(description = "账户详细信息")
 public class AccountDetailVO extends AccountInfoVO {
 
-    @ApiModelProperty(value = "用户角色名（用逗号分割）")
+    @Schema(description = "用户角色名（用逗号分割）")
     private String roleNames;
 
-    @ApiModelProperty(value = "角色Code列表")
+    @Schema(description = "角色Code列表")
     private List<String> roleCodes;
 
-    @ApiModelProperty(value = "用户权限列表")
+    @Schema(description = "用户权限列表")
     private List<String> permissionCodes;
 
     public AccountDetailVO(AccountEntity entity) {

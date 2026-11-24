@@ -7,8 +7,8 @@ import com.wety.demo.common.util.CloseableUtil;
 import com.wety.demo.core.misc.AppThreadLocal;
 import org.apache.commons.io.IOUtils;
 
-import javax.servlet.Filter;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.ServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;

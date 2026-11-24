@@ -1,20 +1,19 @@
 package com.wety.demo.module.organization.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 部门树查询参数。
  */
-@ApiModel(value = "DeptTreeQueryDTO", description = "部门树查询参数")
+@Schema(name = "DeptTreeQueryDTO", description = "部门树查询参数")
 public class DeptTreeQueryDTO {
 
     /** 部门名称模糊搜索。 */
-    @ApiModelProperty(value = "部门名称模糊搜索")
+    @Schema(description = "部门名称模糊搜索")
     private String name;
 
     /** 状态筛选：1-启用，0-停用。 */
-    @ApiModelProperty(value = "状态筛选：1-启用，0-停用")
+    @Schema(description = "状态筛选：1-启用，0-停用")
     private Integer status;
 
     public String getName() {

@@ -1,31 +1,30 @@
 package com.wety.demo.module.common.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 登录请求参数载体
  *
  * @author wety
  */
-@ApiModel(description = "登录参数对象")
+@Schema(description = "登录参数对象")
 public class LoginDTO {
     /**
      * 用户登录名
      */
-    @ApiModelProperty(value = "登录名", example = "admin")
+    @Schema(description = "登录名", example = "admin")
     private String loginName;
 
     /**
      * 用户登录密码
      */
-    @ApiModelProperty(value = "登录密码", example = "1fed0533d4a52b1e2cdd53155a9a27ed")
+    @Schema(description = "登录密码", example = "1fed0533d4a52b1e2cdd53155a9a27ed")
     private String password;
 
     /**
      * 验证码
      */
-    @ApiModelProperty(value = "验证码", example = "1234")
+    @Schema(description = "验证码", example = "1234")
     private String checkCode;
 
     public String getLoginName() {

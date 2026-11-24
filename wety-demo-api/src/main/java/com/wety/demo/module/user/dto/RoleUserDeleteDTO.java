@@ -1,18 +1,17 @@
 package com.wety.demo.module.user.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(value = "RoleUserDeleteDTO", description = "删除角色用户参数")
+@Schema(name = "RoleUserDeleteDTO", description = "删除角色用户参数")
 public class RoleUserDeleteDTO {
 
-    @ApiModelProperty("角色code")
+    @Schema(description = "角色code")
     private String roleCode;
 
-    @ApiModelProperty("用户code")
+    @Schema(description = "用户code")
     private String accountCode;
 
     public String getRoleCode() {

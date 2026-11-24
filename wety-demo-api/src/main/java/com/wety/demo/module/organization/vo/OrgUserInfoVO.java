@@ -3,8 +3,7 @@ package com.wety.demo.module.organization.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wety.demo.common.constant.GlobalConst;
 import com.wety.demo.common.entity.AccountEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,64 +12,64 @@ import java.util.List;
 /**
  * 组织架构用户信息返回模型。
  */
-@ApiModel(value = "OrgUserInfoVO", description = "组织架构用户信息")
+@Schema(name = "OrgUserInfoVO", description = "组织架构用户信息")
 public class OrgUserInfoVO {
 
     /** 账号业务编码。 */
-    @ApiModelProperty(value = "账号业务编码")
+    @Schema(description = "账号业务编码")
     private String code;
 
     /** 登录名。 */
-    @ApiModelProperty(value = "登录名")
+    @Schema(description = "登录名")
     private String loginName;
 
     /** 用户姓名。 */
-    @ApiModelProperty(value = "用户姓名")
+    @Schema(description = "用户姓名")
     private String userName;
 
     /** 邮箱。 */
-    @ApiModelProperty(value = "邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
     /** 手机号。 */
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String phoneNumber;
 
     /** 是否禁用：0-启用，1-禁用。 */
-    @ApiModelProperty(value = "是否禁用：0-启用，1-禁用")
+    @Schema(description = "是否禁用：0-启用，1-禁用")
     private Integer disabled;
 
     /** 是否内置超管：1-是，0-否。 */
-    @ApiModelProperty(value = "是否内置超管：1-是，0-否")
+    @Schema(description = "是否内置超管：1-是，0-否")
     private Integer superAdmin;
 
     /** 主部门编码。 */
-    @ApiModelProperty(value = "主部门编码")
+    @Schema(description = "主部门编码")
     private String primaryDeptCode;
 
     /** 主部门名称。 */
-    @ApiModelProperty(value = "主部门名称")
+    @Schema(description = "主部门名称")
     private String primaryDeptName;
 
     /** 岗位编码列表。 */
-    @ApiModelProperty(value = "岗位编码列表")
+    @Schema(description = "岗位编码列表")
     private List<String> positionCodes = new ArrayList<>();
 
     /** 岗位名称列表。 */
-    @ApiModelProperty(value = "岗位名称列表")
+    @Schema(description = "岗位名称列表")
     private List<String> positionNames = new ArrayList<>();
 
     /** 角色编码列表。 */
-    @ApiModelProperty(value = "角色编码列表")
+    @Schema(description = "角色编码列表")
     private List<String> roleCodes = new ArrayList<>();
 
     /** 角色名称列表。 */
-    @ApiModelProperty(value = "角色名称列表")
+    @Schema(description = "角色名称列表")
     private List<String> roleNames = new ArrayList<>();
 
     /** 创建时间。 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     public OrgUserInfoVO() {

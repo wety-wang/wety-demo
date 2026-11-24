@@ -1,8 +1,8 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
@@ -11,34 +11,34 @@ import java.util.Date;
 @Entity(name = "role")
 public class RoleEntity {
 
-    @ApiModelProperty(value = "数据主键，修改操作时必须带着", example = "1")
+    @Schema(description = "数据主键，修改操作时必须带着", example = "1")
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty(value = "角色内部用code，修改操作时必须带着", example = "4601b43274e64b45a95cfcd15fcd9660")
+    @Schema(description = "角色内部用code，修改操作时必须带着", example = "4601b43274e64b45a95cfcd15fcd9660")
     @Column(name = "code")
     private String code;
 
-    @ApiModelProperty(value = "角色名称")
+    @Schema(description = "角色名称")
     @Column(name = "name")
     private String name;
 
     /** 数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人。 */
-    @ApiModelProperty(value = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
-    @Column(name = "data_scope")
+    @Schema(description = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
+    @Column(name = "data_scope", nullable = false, columnDefinition = "TINYINT")
     private Integer dataScope;
 
-    @ApiModelProperty(value = "是否删除 1已删除，0未删除", example = "")
-    @Column(name = "deleted")
+    @Schema(description = "是否删除 1已删除，0未删除", example = "")
+    @Column(name = "deleted", nullable = false)
     private Integer deleted;
 
-    @ApiModelProperty(hidden = true, value = "创建时间")
+    @Schema(hidden = true, description = "创建时间")
     @Column(name = "create_time")
     private Date createTime;
 
-    @ApiModelProperty(hidden = true, value = "更新时间")
+    @Schema(hidden = true, description = "更新时间")
     @Column(name = "update_time")
     private Date updateTime;
 

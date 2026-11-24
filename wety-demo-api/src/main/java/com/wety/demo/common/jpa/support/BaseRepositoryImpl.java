@@ -15,13 +15,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaBuilder.In;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.Attribute;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.metamodel.Attribute;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -169,7 +169,8 @@ public class BaseRepositoryImpl<T, I> extends SimpleJpaRepository<T, I> implemen
 
     @SuppressWarnings("unchecked")
     private Predicate ofExpressionType(Root<T> root, CriteriaBuilder cb, CriteriaExpression criteriaExpression, String propertyName, Object value) {
-        if (value == null || org.springframework.util.StringUtils.isEmpty(value)) {
+        // Spring 6 已移除 org.springframework.util.StringUtils.isEmpty(Object)，保持原有 null 或空串判断语义
+        if (value == null || "".equals(value)) {
             if (criteriaExpression.skipOnEmpty()) {
                 return null;
             } else {

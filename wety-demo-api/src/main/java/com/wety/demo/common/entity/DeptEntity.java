@@ -1,14 +1,13 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,7 +18,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "dept")
-@ApiModel(description = "部门信息表")
+@Schema(description = "部门信息表")
 public class DeptEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,77 +26,77 @@ public class DeptEntity implements Serializable {
     /** 数据库主键。 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "数据库主键")
+    @Schema(description = "数据库主键")
     private Long id;
 
     /** 部门唯一业务编码。 */
     @Column(name = "code", nullable = false, length = 40)
-    @ApiModelProperty(value = "部门唯一业务编码")
+    @Schema(description = "部门唯一业务编码")
     private String code;
 
     /** 父部门业务编码，根部门为 0。 */
     @Column(name = "parent_code", nullable = false, length = 40)
-    @ApiModelProperty(value = "父部门业务编码，根部门为0")
+    @Schema(description = "父部门业务编码，根部门为0")
     private String parentCode;
 
     /** 祖级物化路径，逗号分隔，如 0, 或 0,dept-root,。 */
     @Column(name = "ancestors", nullable = false, length = 500)
-    @ApiModelProperty(value = "祖级物化路径")
+    @Schema(description = "祖级物化路径")
     private String ancestors;
 
     /** 部门名称。 */
     @Column(name = "name", nullable = false, length = 100)
-    @ApiModelProperty(value = "部门名称")
+    @Schema(description = "部门名称")
     private String name;
 
     /** 同级排序号，升序排列。 */
     @Column(name = "sort_order", nullable = false)
-    @ApiModelProperty(value = "同级排序号")
+    @Schema(description = "同级排序号")
     private Integer sortOrder;
 
     /** 部门负责人账号编码。 */
     @Column(name = "leader_account_code", length = 40)
-    @ApiModelProperty(value = "部门负责人账号编码")
+    @Schema(description = "部门负责人账号编码")
     private String leaderAccountCode;
 
     /** 联系电话。 */
     @Column(name = "phone", length = 32)
-    @ApiModelProperty(value = "联系电话")
+    @Schema(description = "联系电话")
     private String phone;
 
     /** 联系邮箱。 */
     @Column(name = "email", length = 100)
-    @ApiModelProperty(value = "联系邮箱")
+    @Schema(description = "联系邮箱")
     private String email;
 
     /** 状态：1-启用，0-停用。 */
-    @Column(name = "status", nullable = false)
-    @ApiModelProperty(value = "状态：1-启用，0-停用")
+    @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "状态：1-启用，0-停用")
     private Integer status;
 
     /** 创建人业务编码。 */
     @Column(name = "create_user", length = 40)
-    @ApiModelProperty(value = "创建人业务编码")
+    @Schema(description = "创建人业务编码")
     private String createUser;
 
     /** 更新人业务编码。 */
     @Column(name = "update_user", length = 40)
-    @ApiModelProperty(value = "更新人业务编码")
+    @Schema(description = "更新人业务编码")
     private String updateUser;
 
     /** 创建时间。 */
     @Column(name = "create_time")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     /** 更新时间。 */
     @Column(name = "update_time")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private Date updateTime;
 
     /** 是否删除：0-否，1-是。 */
-    @Column(name = "deleted", nullable = false)
-    @ApiModelProperty(value = "是否删除：0-否，1-是")
+    @Column(name = "deleted", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "是否删除：0-否，1-是")
     private Integer deleted;
 
     public Long getId() {

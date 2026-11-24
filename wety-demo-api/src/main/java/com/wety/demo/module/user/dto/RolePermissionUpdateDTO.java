@@ -1,26 +1,25 @@
 package com.wety.demo.module.user.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 /**
  * @author wety
  */
-@ApiModel(value = "RolePermissionUpdateDTO", description = "角色权限修改参数")
+@Schema(name = "RolePermissionUpdateDTO", description = "角色权限修改参数")
 public class RolePermissionUpdateDTO {
 
-    @ApiModelProperty(value = "角色的code", example = "3fa9b8243efb4fa7a6a313248b32177b")
+    @Schema(description = "角色的code", example = "3fa9b8243efb4fa7a6a313248b32177b")
     private String roleCode;
 
     /**
      * 所用有的权限编码的数组
      */
-    @ApiModelProperty(value = "用户/账户维护的权限的code列表，权限修改时用")
+    @Schema(description = "用户/账户维护的权限的code列表，权限修改时用")
     private List<String> permissionCodeList;
 
-    @ApiModelProperty(value = "用户的code列表")
+    @Schema(description = "用户的code列表")
     private List<String> accountCodeList;
 
     public String getRoleCode() {

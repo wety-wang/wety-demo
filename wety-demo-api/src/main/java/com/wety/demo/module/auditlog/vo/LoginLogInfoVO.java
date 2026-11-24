@@ -1,8 +1,7 @@
 package com.wety.demo.module.auditlog.vo;
 
 import com.wety.demo.common.entity.LoginAuditLogEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 
@@ -11,45 +10,45 @@ import java.util.Date;
  *
  * @author wety
  */
-@ApiModel(description = "登录日志信息")
+@Schema(description = "登录日志信息")
 public class LoginLogInfoVO {
 
-    @ApiModelProperty("账户code")
+    @Schema(description = "账户code")
     private String accountCode;
 
-    @ApiModelProperty("账户登录名")
+    @Schema(description = "账户登录名")
     private String accountLoginName;
 
-    @ApiModelProperty("账户姓名")
+    @Schema(description = "账户姓名")
     private String accountName;
 
     /** 登录账号所属主部门编码。 */
-    @ApiModelProperty("登录账号所属主部门编码")
+    @Schema(description = "登录账号所属主部门编码")
     private String deptCode;
 
     /** 登录账号所属主部门名称。 */
-    @ApiModelProperty("登录账号所属主部门名称")
+    @Schema(description = "登录账号所属主部门名称")
     private String deptName;
 
-    @ApiModelProperty("登录时间")
+    @Schema(description = "登录时间")
     private Date operationTime;
 
-    @ApiModelProperty("登录结果")
+    @Schema(description = "登录结果")
     private String result;
 
-    @ApiModelProperty("登录描述")
+    @Schema(description = "登录描述")
     private String description;
 
-    @ApiModelProperty("最后一次操作时间")
+    @Schema(description = "最后一次操作时间")
     private Date lastOperationTime;
 
-    @ApiModelProperty("客户端IP")
+    @Schema(description = "客户端IP")
     private String clientIp;
 
-    @ApiModelProperty("退出登录时间")
+    @Schema(description = "退出登录时间")
     private Date logoutTime;
 
-    @ApiModelProperty("User-Agent")
+    @Schema(description = "User-Agent")
     private String userAgent;
 
     /**

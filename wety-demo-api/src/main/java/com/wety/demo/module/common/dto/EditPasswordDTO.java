@@ -1,24 +1,23 @@
 package com.wety.demo.module.common.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  **/
-@ApiModel(value = "com.wety.demo.module.common.dto.EditPasswordDTO", description = "修改密码传入参数")
+@Schema(name = "com.wety.demo.module.common.dto.EditPasswordDTO", description = "修改密码传入参数")
 public class EditPasswordDTO {
 
     /**
      * 当前密码
      */
-    @ApiModelProperty(value = "当前密码")
+    @Schema(description = "当前密码")
     private String currentPassword;
 
     /**
      * 新密码
      */
-    @ApiModelProperty(value = "新密码")
+    @Schema(description = "新密码")
     private String newPassword;
 
     public String getCurrentPassword() {

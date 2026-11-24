@@ -12,8 +12,8 @@ import com.wety.demo.module.organization.dto.OrgUserStatusUpdateDTO;
 import com.wety.demo.module.organization.dto.OrgUserUpdateDTO;
 import com.wety.demo.module.organization.service.OrgUserService;
 import com.wety.demo.module.organization.vo.OrgUserInfoVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * 组织架构用户管理接口。
  */
 @RestController
 @RequestMapping(value = "/bac/org/user")
-@Api(tags = "101-03-00 组织架构-用户管理", produces = "application/json", consumes = "application/json")
+@Tag(name = "101-03-00 组织架构-用户管理")
 @Permission(code = "101-03-00", parentCode = "101-00-00", name = "用户管理", order = 3)
 public class OrgUserController {
 
@@ -42,7 +42,7 @@ public class OrgUserController {
      * @return 用户分页结果
      */
     @RequestMapping(value = "/listPageable", method = RequestMethod.POST)
-    @ApiOperation(value = "分页查询用户")
+    @Operation(summary = "分页查询用户")
     @Permission(code = "101-03-01", parentCode = "101-03-00", name = "查看列表", leafNode = GlobalConst.YES, order = 1)
     @OperationLog(
             operationType = OperationType.QUERY,
@@ -60,7 +60,7 @@ public class OrgUserController {
      * @return 用户详情
      */
     @PostMapping(value = "/query")
-    @ApiOperation(value = "查询用户详情")
+    @Operation(summary = "查询用户详情")
     public OrgUserInfoVO query(@RequestBody UniversalCodeDTO codeDTO) {
         return orgUserService.query(codeDTO.getCode());
     }
@@ -72,7 +72,7 @@ public class OrgUserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ApiOperation(value = "新增用户")
+    @Operation(summary = "新增用户")
     @Permission(code = "101-03-02", parentCode = "101-03-00", name = "新增用户", leafNode = GlobalConst.YES, order = 2)
     @OperationLog(
             operationType = OperationType.CREATE,
@@ -91,7 +91,7 @@ public class OrgUserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @ApiOperation(value = "修改用户")
+    @Operation(summary = "修改用户")
     @Permission(code = "101-03-03", parentCode = "101-03-00", name = "修改用户", leafNode = GlobalConst.YES, order = 3)
     @OperationLog(
             operationType = OperationType.UPDATE,
@@ -110,7 +110,7 @@ public class OrgUserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @ApiOperation(value = "删除用户")
+    @Operation(summary = "删除用户")
     @Permission(code = "101-03-04", parentCode = "101-03-00", name = "删除用户", leafNode = GlobalConst.YES, order = 4)
     @OperationLog(
             operationType = OperationType.DELETE,
@@ -129,7 +129,7 @@ public class OrgUserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @ApiOperation(value = "启停用户")
+    @Operation(summary = "启停用户")
     @Permission(code = "101-03-05", parentCode = "101-03-00", name = "启停用户", leafNode = GlobalConst.YES, order = 5)
     @OperationLog(
             operationType = OperationType.UPDATE,
@@ -148,7 +148,7 @@ public class OrgUserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    @ApiOperation(value = "重置用户密码")
+    @Operation(summary = "重置用户密码")
     @Permission(code = "101-03-06", parentCode = "101-03-00", name = "重置密码", leafNode = GlobalConst.YES, order = 6)
     @OperationLog(
             operationType = OperationType.UPDATE,

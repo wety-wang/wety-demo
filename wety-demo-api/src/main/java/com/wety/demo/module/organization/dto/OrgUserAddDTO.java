@@ -1,50 +1,49 @@
 package com.wety.demo.module.organization.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 /**
  * 新增用户参数。
  */
-@ApiModel(value = "OrgUserAddDTO", description = "新增用户参数")
+@Schema(name = "OrgUserAddDTO", description = "新增用户参数")
 public class OrgUserAddDTO {
 
     /** 登录名（全局唯一）。 */
-    @ApiModelProperty(value = "登录名", required = true)
+    @Schema(description = "登录名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String loginName;
 
     /** 姓名。 */
-    @ApiModelProperty(value = "用户姓名", required = true)
+    @Schema(description = "用户姓名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String userName;
 
     /** 密码（前端 SM2 加密传入，后端解密后 BCrypt 存储）。 */
-    @ApiModelProperty(value = "密码（SM2加密）", required = true)
+    @Schema(description = "密码（SM2加密）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
 
     /** 邮箱。 */
-    @ApiModelProperty(value = "邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
     /** 手机号。 */
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String phoneNumber;
 
     /** 主部门编码。 */
-    @ApiModelProperty(value = "主部门编码", required = true)
+    @Schema(description = "主部门编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String primaryDeptCode;
 
     /** 关联岗位编码列表。 */
-    @ApiModelProperty(value = "关联岗位编码列表")
+    @Schema(description = "关联岗位编码列表")
     private List<String> positionCodes;
 
     /** 关联角色编码列表。 */
-    @ApiModelProperty(value = "关联角色编码列表")
+    @Schema(description = "关联角色编码列表")
     private List<String> roleCodes;
 
     /** 初始状态：0-启用（默认），1-禁用。 */
-    @ApiModelProperty(value = "初始状态：0-启用（默认），1-禁用")
+    @Schema(description = "初始状态：0-启用（默认），1-禁用")
     private Integer disabled;
 
     public String getLoginName() {

@@ -2,8 +2,7 @@ package com.wety.demo.module.organization.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wety.demo.common.entity.DeptEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,56 +11,56 @@ import java.util.List;
 /**
  * 部门树节点返回模型。
  */
-@ApiModel(value = "DeptTreeVO", description = "部门树节点信息")
+@Schema(name = "DeptTreeVO", description = "部门树节点信息")
 public class DeptTreeVO {
 
     /** 部门业务编码。 */
-    @ApiModelProperty(value = "部门业务编码")
+    @Schema(description = "部门业务编码")
     private String code;
 
     /** 父部门编码（根为 "0"）。 */
-    @ApiModelProperty(value = "父部门编码（根为0）")
+    @Schema(description = "父部门编码（根为0）")
     private String parentCode;
 
     /** 祖级路径。 */
-    @ApiModelProperty(value = "祖级路径")
+    @Schema(description = "祖级路径")
     private String ancestors;
 
     /** 部门名称。 */
-    @ApiModelProperty(value = "部门名称")
+    @Schema(description = "部门名称")
     private String name;
 
     /** 排序号。 */
-    @ApiModelProperty(value = "排序号")
+    @Schema(description = "排序号")
     private Integer sortOrder;
 
     /** 负责人账号编码。 */
-    @ApiModelProperty(value = "负责人账号编码")
+    @Schema(description = "负责人账号编码")
     private String leaderAccountCode;
 
     /** 负责人姓名。 */
-    @ApiModelProperty(value = "负责人姓名")
+    @Schema(description = "负责人姓名")
     private String leaderAccountName;
 
     /** 联系电话。 */
-    @ApiModelProperty(value = "联系电话")
+    @Schema(description = "联系电话")
     private String phone;
 
     /** 联系邮箱。 */
-    @ApiModelProperty(value = "联系邮箱")
+    @Schema(description = "联系邮箱")
     private String email;
 
     /** 状态：1-启用，0-停用。 */
-    @ApiModelProperty(value = "状态：1-启用，0-停用")
+    @Schema(description = "状态：1-启用，0-停用")
     private Integer status;
 
     /** 创建时间。 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     /** 子部门列表。 */
-    @ApiModelProperty(value = "子部门列表")
+    @Schema(description = "子部门列表")
     private List<DeptTreeVO> children = new ArrayList<>();
 
     public DeptTreeVO() {

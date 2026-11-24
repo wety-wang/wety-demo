@@ -1,6 +1,9 @@
 package com.wety.demo.common.util;
 
 import com.antherd.smcrypto.sm2.Sm2;
+import com.wety.demo.common.exception.CustomException;
+
+import javax.script.ScriptException;
 
 /**
  * SM2加密工具类
@@ -24,11 +27,16 @@ public class SM2Utils {
 
     /**
      * 解密，如果内容并非使用SM2加密或者加密内容被篡改或者内容是普通内容，解密会异常
-     * @param cipherData
-     * @return
+     *
+     * @param cipherData 密文
+     * @return 解密后的明文
      */
     public static String decrypt(String cipherData) {
-        return Sm2.doDecrypt(cipherData, PRIVATE_KEY, 0);
+        try {
+            return Sm2.doDecrypt(cipherData, PRIVATE_KEY, 0);
+        } catch (ScriptException e) {
+            throw new CustomException("SM2解密失败", e);
+        }
     }
 
     /**
@@ -38,6 +46,10 @@ public class SM2Utils {
      * @return 密文
      */
     public static String encrypt(String plaintext) {
-        return Sm2.doEncrypt(plaintext, PUBLIC_KEY,0);
+        try {
+            return Sm2.doEncrypt(plaintext, PUBLIC_KEY, 0);
+        } catch (ScriptException e) {
+            throw new CustomException("SM2加密失败", e);
+        }
     }
 }

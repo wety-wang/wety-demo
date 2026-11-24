@@ -1,14 +1,13 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,7 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "account_position_link")
-@ApiModel(description = "账号岗位关联表")
+@Schema(description = "账号岗位关联表")
 public class AccountPositionLinkEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,37 +24,37 @@ public class AccountPositionLinkEntity implements Serializable {
     /** 数据库主键。 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "数据库主键")
+    @Schema(description = "数据库主键")
     private Long id;
 
     /** 关联记录唯一编码。 */
     @Column(name = "code", nullable = false, length = 40)
-    @ApiModelProperty(value = "关联记录唯一编码")
+    @Schema(description = "关联记录唯一编码")
     private String code;
 
     /** 账号业务编码。 */
     @Column(name = "account_code", nullable = false, length = 40)
-    @ApiModelProperty(value = "账号业务编码")
+    @Schema(description = "账号业务编码")
     private String accountCode;
 
     /** 岗位业务编码。 */
     @Column(name = "position_code", nullable = false, length = 40)
-    @ApiModelProperty(value = "岗位业务编码")
+    @Schema(description = "岗位业务编码")
     private String positionCode;
 
     /** 创建时间。 */
     @Column(name = "create_time")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     /** 更新时间。 */
     @Column(name = "update_time")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private Date updateTime;
 
     /** 是否删除：0-否，1-是。 */
-    @Column(name = "deleted", nullable = false)
-    @ApiModelProperty(value = "是否删除：0-否，1-是")
+    @Column(name = "deleted", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "是否删除：0-否，1-是")
     private Integer deleted;
 
     public Long getId() {

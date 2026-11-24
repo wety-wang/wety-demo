@@ -1,30 +1,29 @@
 package com.wety.demo.module.user.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(value = "UserAddDTO", description = "新增用户参数")
+@Schema(name = "UserAddDTO", description = "新增用户参数")
 public class UserAddDTO {
 
-    @ApiModelProperty(value = "姓名")
+    @Schema(description = "姓名")
     private String userName;
 
-    @ApiModelProperty(value = "登录名")
+    @Schema(description = "登录名")
     private String loginName;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
-    @ApiModelProperty(value = "邮箱地址")
+    @Schema(description = "邮箱地址")
     private String email;
 
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String phoneNumber;
 
-    @ApiModelProperty(value = "账户类型:admin表示系统管理员；normal表示普通账户")
+    @Schema(description = "账户类型:admin表示系统管理员；normal表示普通账户")
     private String type;
 
     public String getUserName() {

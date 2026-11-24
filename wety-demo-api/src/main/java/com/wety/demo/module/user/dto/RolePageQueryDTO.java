@@ -5,25 +5,24 @@ import com.wety.demo.common.dto.PageableDTO;
 import com.wety.demo.common.jpa.CriteriaExpression;
 import com.wety.demo.common.jpa.CriteriaQueryObject;
 import com.wety.demo.common.jpa.ExpressionType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 角色分页查询参数。
  *
  * @author wety
  */
-@ApiModel(value = "RolePageQueryDTO", description = "角色分页查询参数")
+@Schema(name = "RolePageQueryDTO", description = "角色分页查询参数")
 public class RolePageQueryDTO extends PageableDTO implements CriteriaQueryObject {
 
     /** 角色名称（模糊搜索）。 */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "角色名称，模糊搜索")
+    @Schema(description = "角色名称，模糊搜索")
     private String name;
 
     /** 软删除过滤标识，固定仅查询未删除角色。 */
     @CriteriaExpression(expressionType = ExpressionType.EQUAL)
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Integer deleted = GlobalConst.NOT;
 
     public String getName() {

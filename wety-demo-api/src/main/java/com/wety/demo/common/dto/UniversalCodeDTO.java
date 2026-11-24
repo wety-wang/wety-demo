@@ -1,15 +1,14 @@
 package com.wety.demo.common.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(description = "通用Code")
+@Schema(description = "通用Code")
 public class UniversalCodeDTO {
 
-    @ApiModelProperty(value = "编号")
+    @Schema(description = "编号")
     private String code;
 
     public String getCode() {

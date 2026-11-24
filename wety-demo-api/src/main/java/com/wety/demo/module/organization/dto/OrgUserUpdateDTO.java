@@ -1,42 +1,41 @@
 package com.wety.demo.module.organization.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 /**
  * 修改用户参数。
  */
-@ApiModel(value = "OrgUserUpdateDTO", description = "修改用户参数")
+@Schema(name = "OrgUserUpdateDTO", description = "修改用户参数")
 public class OrgUserUpdateDTO {
 
     /** 账号业务编码。 */
-    @ApiModelProperty(value = "账号业务编码", required = true)
+    @Schema(description = "账号业务编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String code;
 
     /** 姓名。 */
-    @ApiModelProperty(value = "用户姓名", required = true)
+    @Schema(description = "用户姓名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String userName;
 
     /** 邮箱。 */
-    @ApiModelProperty(value = "邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
     /** 手机号。 */
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String phoneNumber;
 
     /** 主部门编码。 */
-    @ApiModelProperty(value = "主部门编码", required = true)
+    @Schema(description = "主部门编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String primaryDeptCode;
 
     /** 关联岗位编码列表（全量覆盖）。 */
-    @ApiModelProperty(value = "关联岗位编码列表（全量覆盖）")
+    @Schema(description = "关联岗位编码列表（全量覆盖）")
     private List<String> positionCodes;
 
     /** 关联角色编码列表（全量覆盖）。 */
-    @ApiModelProperty(value = "关联角色编码列表（全量覆盖）")
+    @Schema(description = "关联角色编码列表（全量覆盖）")
     private List<String> roleCodes;
 
     public String getCode() {

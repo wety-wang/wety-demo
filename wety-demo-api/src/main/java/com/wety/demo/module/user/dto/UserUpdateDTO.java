@@ -1,30 +1,29 @@
 package com.wety.demo.module.user.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(value = "UserUpdateDTO", description = "修改用户参数")
+@Schema(name = "UserUpdateDTO", description = "修改用户参数")
 public class UserUpdateDTO {
 
-    @ApiModelProperty(value = "账户唯一识别，修改操作时必须带着")
+    @Schema(description = "账户唯一识别，修改操作时必须带着")
     private String code;
 
-    @ApiModelProperty(value = "姓名")
+    @Schema(description = "姓名")
     private String userName;
 
-    @ApiModelProperty(value = "登录名")
+    @Schema(description = "登录名")
     private String loginName;
 
-    @ApiModelProperty(value = "邮箱地址")
+    @Schema(description = "邮箱地址")
     private String email;
 
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String phoneNumber;
 
-    @ApiModelProperty(value = "账户类型:admin表示系统管理员；normal表示普通账户")
+    @Schema(description = "账户类型:admin表示系统管理员；normal表示普通账户")
     private String type;
 
     public String getCode() {

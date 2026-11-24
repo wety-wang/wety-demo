@@ -3,8 +3,7 @@ package com.wety.demo.module.user.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wety.demo.common.entity.RoleEntity;
 import com.wety.demo.core.datascope.DataScopeEnum;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 
@@ -13,27 +12,27 @@ import java.util.Date;
  *
  * @author wety
  */
-@ApiModel(value = "RoleInfoVO", description = "角色列表返回参数")
+@Schema(name = "RoleInfoVO", description = "角色列表返回参数")
 public class RoleInfoVO {
 
     /** 角色业务编码。 */
-    @ApiModelProperty(value = "角色内部用code，修改操作时必须带着", example = "4601b43274e64b45a95cfcd15fcd9660")
+    @Schema(description = "角色内部用code，修改操作时必须带着", example = "4601b43274e64b45a95cfcd15fcd9660")
     private String code;
 
     /** 角色名称。 */
-    @ApiModelProperty(value = "角色名称")
+    @Schema(description = "角色名称")
     private String name;
 
     /** 数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人。 */
-    @ApiModelProperty(value = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
+    @Schema(description = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
     private Integer dataScope;
 
     /** 数据权限范围中文名称。 */
-    @ApiModelProperty(value = "数据权限范围中文名称")
+    @Schema(description = "数据权限范围中文名称")
     private String dataScopeName;
 
     /** 创建时间。 */
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 

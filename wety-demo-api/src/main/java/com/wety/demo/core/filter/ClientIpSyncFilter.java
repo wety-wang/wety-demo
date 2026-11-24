@@ -4,8 +4,8 @@ import com.wety.demo.common.util.HttpServletRequestUtil;
 import com.wety.demo.core.misc.AppThreadLocal;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

@@ -1,9 +1,8 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Date;
  *
  * @author wety
  */
-@ApiModel(description = "登录审计日志记录")
+@Schema(description = "登录审计日志记录")
 @Entity(name = "login_audit_log")
 public class LoginAuditLogEntity {
 
@@ -19,53 +18,53 @@ public class LoginAuditLogEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty("登录日志唯一编码")
+    @Schema(description = "登录日志唯一编码")
     @Column(name = "code")
     private String code;
 
-    @ApiModelProperty(value = "登录账号的code", example = "admin")
+    @Schema(description = "登录账号的code", example = "admin")
     @Column(name = "account_code")
     private String accountCode;
 
-    @ApiModelProperty("登录账号登录名")
+    @Schema(description = "登录账号登录名")
     @Column(name = "account_login_name")
     private String accountLoginName;
 
-    @ApiModelProperty("登录账号用户名")
+    @Schema(description = "登录账号用户名")
     @Column(name = "account_name")
     private String accountName;
 
     /** 登录账号所属主部门编码，用于数据权限过滤。 */
-    @ApiModelProperty("登录账号所属主部门编码")
+    @Schema(description = "登录账号所属主部门编码")
     @Column(name = "dept_code", length = 40)
     private String deptCode;
 
-    @ApiModelProperty("登录/登出时间")
+    @Schema(description = "登录/登出时间")
     @Column(name = "operation_time")
     private Date operationTime;
 
-    @ApiModelProperty(value = "操作结果", example = "success/fail")
+    @Schema(description = "操作结果", example = "success/fail")
     @Column(name = "result")
     private String result;
 
-    @ApiModelProperty(value = "操作描述")
+    @Schema(description = "操作描述")
     @Column(name = "description")
     private String description;
 
-    @ApiModelProperty("客户端IP")
+    @Schema(description = "客户端IP")
     @Column(name = "client_ip")
     private String clientIp;
 
-    @ApiModelProperty("最后一次操作时间，用于会话活跃度记录")
+    @Schema(description = "最后一次操作时间，用于会话活跃度记录")
     @Column(name = "last_operation_time")
     private Date lastOperationTime;
 
-    @ApiModelProperty("主动退出登录时间")
+    @Schema(description = "主动退出登录时间")
     @Column(name = "logout_time")
     private Date logoutTime;
 
-    @ApiModelProperty("User-Agent信息")
-    @Column(name = "user_agent")
+    @Schema(description = "User-Agent信息")
+    @Column(name = "user_agent", length = 2048)
     private String userAgent;
 
     public Long getId() {

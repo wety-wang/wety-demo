@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.DefaultParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.expression.ExpressionParser;
@@ -29,8 +30,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -149,8 +150,8 @@ public class UserOperationLogAop implements ApplicationContextAware {
     }
 
     private String handleTemplateDescParse(Object[] args, Method method, OperationLog operationLog) {
-        // 获取被拦截方法参数名列表
-        LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
+        // 获取被拦截方法参数名列表（Spring 6.1 已移除 LocalVariableTableParameterNameDiscoverer）
+        ParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
         String[] paraNameArr = discoverer.getParameterNames(method);
 
         // SPEL 上下文

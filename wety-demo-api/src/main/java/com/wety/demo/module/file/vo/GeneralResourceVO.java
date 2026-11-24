@@ -1,34 +1,33 @@
 package com.wety.demo.module.file.vo;
 
 import com.wety.demo.common.entity.GeneralResourceEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 /**
  * @author wety
  */
-@ApiModel(value = "GeneralResourceVO", description = "文件资源VO")
+@Schema(name = "GeneralResourceVO", description = "文件资源VO")
 public class GeneralResourceVO {
 
     @Column(name = "code")
-    @ApiModelProperty(value = "资源code")
+    @Schema(description = "资源code")
     private String code;
 
     @Column(name = "name")
-    @ApiModelProperty(value = "资源名称(eg:background.png)")
+    @Schema(description = "资源名称(eg:background.png)")
     private String name;
 
     @Column(name = "uri")
-    @ApiModelProperty(value = "资源访问路径，在前面加上域名就能直接访问的，以/开头")
+    @Schema(description = "资源访问路径，在前面加上域名就能直接访问的，以/开头")
     private String uri;
 
     @Column(name = "original")
-    @ApiModelProperty(value = "原始文件名")
+    @Schema(description = "原始文件名")
     private String original;
 
-    @ApiModelProperty(value = "资源访问url", example = "https://photo.16pic.com/00/24/45/16pic_2445172_b.jpg")
+    @Schema(description = "资源访问url", example = "https://photo.16pic.com/00/24/45/16pic_2445172_b.jpg")
     private String url;
 
     public GeneralResourceVO() {

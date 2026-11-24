@@ -14,13 +14,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
-import javax.annotation.Resource;
-import javax.servlet.*;
-import javax.servlet.FilterConfig;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.Resource;
+import jakarta.servlet.*;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,6 +34,17 @@ import java.util.Set;
 @ConditionalOnProperty(name = "application.authentication.switch", havingValue = "true")
 public class AuthenticationFilter extends AbstractFilter {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
+
+    /** 默认放行的 Knife4j 4 / OpenAPI 3 文档静态资源与接口路径。 */
+    private static final List<String> DEFAULT_DOC_EXCLUDE_URLS = Arrays.asList(
+            "/doc.html",
+            "/webjars/**",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/favicon.ico"
+    );
 
     @Resource
     private AuthenticationChecker<AccountEntity> authenticationChecker;
@@ -48,6 +61,7 @@ public class AuthenticationFilter extends AbstractFilter {
 
     @Override
     public void init(FilterConfig filterConfig) {
+        excludeUrlSet.addAll(DEFAULT_DOC_EXCLUDE_URLS);
         if (!StringUtils.isEmpty(excludeUrls)) {
             String[] excludeUrlArray = excludeUrls.split(",");
             Collections.addAll(excludeUrlSet, excludeUrlArray);

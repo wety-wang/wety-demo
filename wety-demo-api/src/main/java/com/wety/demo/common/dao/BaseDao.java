@@ -2,8 +2,8 @@ package com.wety.demo.common.dao;
 
 import org.springframework.data.repository.CrudRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.Optional;
 
 /**

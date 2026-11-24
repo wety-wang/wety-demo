@@ -1,8 +1,7 @@
 package com.wety.demo.module.auditlog.vo;
 
 import com.wety.demo.common.entity.OperationAuditLogEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 
@@ -11,54 +10,54 @@ import java.util.Date;
  *
  * @author wety
  */
-@ApiModel(description = "操作日志信息")
+@Schema(description = "操作日志信息")
 public class OperationLogInfoVO {
 
-    @ApiModelProperty(value = "模块编码", example = "user")
+    @Schema(description = "模块编码", example = "user")
     private String modelCode;
 
-    @ApiModelProperty(value = "所属模块", example = "用户管理")
+    @Schema(description = "所属模块", example = "用户管理")
     private String modelName;
 
-    @ApiModelProperty("请求路径")
+    @Schema(description = "请求路径")
     private String path;
 
-    @ApiModelProperty(value = "登录账号的code", example = "admin")
+    @Schema(description = "登录账号的code", example = "admin")
     private String accountCode;
 
-    @ApiModelProperty("登录账号登录名")
+    @Schema(description = "登录账号登录名")
     private String accountLoginName;
 
-    @ApiModelProperty("登录账号用户名")
+    @Schema(description = "登录账号用户名")
     private String accountName;
 
     /** 操作人所属主部门编码。 */
-    @ApiModelProperty("操作人所属主部门编码")
+    @Schema(description = "操作人所属主部门编码")
     private String deptCode;
 
     /** 操作人所属主部门名称。 */
-    @ApiModelProperty("操作人所属主部门名称")
+    @Schema(description = "操作人所属主部门名称")
     private String deptName;
 
-    @ApiModelProperty("客户端IP")
+    @Schema(description = "客户端IP")
     private String clientIp;
 
-    @ApiModelProperty("操作时间")
+    @Schema(description = "操作时间")
     private Date operationTime;
 
-    @ApiModelProperty(value = "操作类型", example = "create/update/delete/query")
+    @Schema(description = "操作类型", example = "create/update/delete/query")
     private String operationType;
 
-    @ApiModelProperty(value = "操作结果", example = "success/fail")
+    @Schema(description = "操作结果", example = "success/fail")
     private String result;
 
-    @ApiModelProperty(value = "操作描述")
+    @Schema(description = "操作描述")
     private String description;
 
-    @ApiModelProperty("处理耗时(ms)")
+    @Schema(description = "处理耗时(ms)")
     private Long durationMs;
 
-    @ApiModelProperty("关联的登录日志编码")
+    @Schema(description = "关联的登录日志编码")
     private String loginLogCode;
 
     public OperationLogInfoVO(OperationAuditLogEntity entity) {

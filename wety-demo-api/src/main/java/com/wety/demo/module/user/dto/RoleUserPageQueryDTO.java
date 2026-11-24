@@ -1,22 +1,21 @@
 package com.wety.demo.module.user.dto;
 
 import com.wety.demo.common.dto.PageableDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(value = "RoleUserPageQueryDTO", description = "角色用户分页查询参数")
+@Schema(name = "RoleUserPageQueryDTO", description = "角色用户分页查询参数")
 public class RoleUserPageQueryDTO extends PageableDTO {
 
-    @ApiModelProperty(value = "姓名,模糊搜索")
+    @Schema(description = "姓名,模糊搜索")
     private String userName;
 
     /**
      * 角色code
      */
-    @ApiModelProperty(value = "角色code")
+    @Schema(description = "角色code")
     private String roleCode;
 
     public String getUserName() {

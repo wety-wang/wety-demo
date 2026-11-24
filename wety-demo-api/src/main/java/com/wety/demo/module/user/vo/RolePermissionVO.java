@@ -1,21 +1,20 @@
 package com.wety.demo.module.user.vo;
 
 import com.wety.demo.core.annotation.PermissionHolder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 /**
  * @author wety
  */
-@ApiModel(value = "RolePermissionVO", description = "角色权限返回参数")
+@Schema(name = "RolePermissionVO", description = "角色权限返回参数")
 public class RolePermissionVO {
 
-    @ApiModelProperty(value = "角色拥有的叶子权限编码")
+    @Schema(description = "角色拥有的叶子权限编码")
     private List<String> codes;
 
-    @ApiModelProperty(value = "全部的权限结构")
+    @Schema(description = "全部的权限结构")
     private List<PermissionHolder> hierarchicalList;
 
     public List<String> getCodes() {

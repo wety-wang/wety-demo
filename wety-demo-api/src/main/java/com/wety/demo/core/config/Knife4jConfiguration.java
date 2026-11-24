@@ -1,56 +1,61 @@
 package com.wety.demo.core.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
+ * Knife4j 4 / OpenAPI 3 接口文档配置类。
+ *
+ * <p>保留原有 {@code application.swagger.switch} 开关控制行为（YAML 中 {@code on} 对应 {@code true}）。</p>
+ *
  * @author wety
  */
-@EnableSwagger2
-@EnableKnife4j
 @Configuration
+@ConditionalOnProperty(name = "application.swagger.switch", havingValue = "true")
 public class Knife4jConfiguration {
 
-    @Value("${application.swagger.switch:off}")
-    private boolean enable;
-
+    /** 服务端口，用于拼装文档服务条款地址。 */
     @Value("${server.port:8080}")
     private int port;
 
-    @Bean(value = "defaultApi2")
-    public Docket defaultApi2() throws UnknownHostException {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .enable(enable)
-                .select()
-                // TODO 更换包路径
-                .apis(RequestHandlerSelectors.basePackage("com.wety.demo.module"))
-                .paths(PathSelectors.any())
-                .build();
+    /**
+     * 配置 OpenAPI 3 基础文档信息。
+     *
+     * @return OpenAPI 文档元数据对象
+     * @throws UnknownHostException 获取本机主机地址失败时抛出
+     */
+    @Bean
+    public OpenAPI customOpenAPI() throws UnknownHostException {
+        String host = InetAddress.getLocalHost().getHostAddress();
+        return new OpenAPI()
+                .info(new Info()
+                        .title("wety-demo 接口规范")
+                        .description("详见每一个接口说明。")
+                        .termsOfService("http://" + host + ":" + port)
+                        .contact(new Contact().name("wety"))
+                        .version("1.0.0"));
     }
 
-    private ApiInfo apiInfo() throws UnknownHostException {
-        String host= InetAddress.getLocalHost().getHostAddress();
-        // TODO 更换接口信息
-        return new ApiInfoBuilder()
-                .title("wety-demo 接口规范")
-                .description("详见每一个接口说明。")
-                .termsOfServiceUrl("http://"+host+":"+port)
-                .contact(new Contact("wety", null, null))
-                .version("1.0.0")
+    /**
+     * 配置默认接口分组，仅扫描业务模块包路径。
+     *
+     * @return 默认接口分组配置
+     */
+    @Bean
+    public GroupedOpenApi defaultApi() {
+        return GroupedOpenApi.builder()
+                .group("default")
+                .packagesToScan("com.wety.demo.module")
+                .pathsToMatch("/**")
                 .build();
     }
 

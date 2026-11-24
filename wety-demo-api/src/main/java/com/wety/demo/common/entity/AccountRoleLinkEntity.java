@@ -1,6 +1,6 @@
 package com.wety.demo.common.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * @author wety

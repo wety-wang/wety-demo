@@ -5,8 +5,7 @@ import com.wety.demo.common.dto.PageableDTO;
 import com.wety.demo.common.jpa.CriteriaExpression;
 import com.wety.demo.common.jpa.CriteriaQueryObject;
 import com.wety.demo.common.jpa.ExpressionType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 import java.util.List;
@@ -16,42 +15,42 @@ import java.util.List;
  *
  * @author wety
  */
-@ApiModel(value = "OperationLogPageQueryDTO", description = "操作日志分页查询参数")
+@Schema(name = "OperationLogPageQueryDTO", description = "操作日志分页查询参数")
 public class OperationLogPageQueryDTO extends PageableDTO implements CriteriaQueryObject {
 
     /**
      * 模块编码
      */
     @CriteriaExpression(propertyName = "modelCode", expressionType = ExpressionType.IN)
-    @ApiModelProperty(value = "模块编码")
+    @Schema(description = "模块编码")
     private List<String> modelCodes;
 
     /**
      * 操作人（多选）
      */
     @CriteriaExpression(propertyName = "accountCode", expressionType = ExpressionType.IN)
-    @ApiModelProperty(value = "操作人")
+    @Schema(description = "操作人")
     private List<String> accountCodes;
 
     /**
      * 操作类型（多选）
      */
     @CriteriaExpression(propertyName = "operationType", expressionType = ExpressionType.IN)
-    @ApiModelProperty(value = "操作类型")
+    @Schema(description = "操作类型")
     private List<String> operationTypes;
 
     /**
      * 操作结果，精确匹配
      */
     @CriteriaExpression(expressionType = ExpressionType.EQUAL)
-    @ApiModelProperty(value = "操作结果")
+    @Schema(description = "操作结果")
     private String result;
 
     /**
      * 操作时间范围，区间查询
      */
     @CriteriaExpression(expressionType = ExpressionType.BEWTEEN)
-    @ApiModelProperty(value = "操作时间范围")
+    @Schema(description = "操作时间范围")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private List<Date> operationTime;
 
@@ -59,7 +58,7 @@ public class OperationLogPageQueryDTO extends PageableDTO implements CriteriaQue
      * 客户端IP，模糊查询
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "客户端IP, 模糊搜索")
+    @Schema(description = "客户端IP, 模糊搜索")
     private String clientIp;
 
     public List<String> getModelCodes() {

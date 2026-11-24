@@ -4,48 +4,47 @@ import com.wety.demo.common.dto.PageableDTO;
 import com.wety.demo.common.jpa.CriteriaExpression;
 import com.wety.demo.common.jpa.CriteriaQueryObject;
 import com.wety.demo.common.jpa.ExpressionType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(value = "UserPageQueryDTO", description = "用户分页查询参数")
+@Schema(name = "UserPageQueryDTO", description = "用户分页查询参数")
 public class UserPageQueryDTO extends PageableDTO implements CriteriaQueryObject {
 
     /**
      * 姓名
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "姓名,模糊搜索")
+    @Schema(description = "姓名,模糊搜索")
     private String userName;
 
     /**
      * 登录名
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "登录名,模糊搜索")
+    @Schema(description = "登录名,模糊搜索")
     private String loginName;
 
     /**
      * 邮箱
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "邮箱,模糊搜索")
+    @Schema(description = "邮箱,模糊搜索")
     private String email;
 
     /**
      * 手机号
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "手机号,模糊搜索")
+    @Schema(description = "手机号,模糊搜索")
     private String phoneNumber;
 
     /**
      * 类型
      */
     @CriteriaExpression(expressionType = ExpressionType.EQUAL)
-    @ApiModelProperty(value = "类型")
+    @Schema(description = "类型")
     private String type;
 
     public String getUserName() {

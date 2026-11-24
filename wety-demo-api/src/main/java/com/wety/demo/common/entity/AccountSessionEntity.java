@@ -1,9 +1,8 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,22 +11,22 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "account_session")
-@ApiModel(description = "账户session表")
+@Schema(description = "账户session表")
 public class AccountSessionEntity implements Serializable {
 
     private static final long serialVersionUID = 4302951311905097306L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "数据主键")
+    @Schema(description = "数据主键")
     private Long id;
 
     @Column(name = "account_code")
-    @ApiModelProperty(value = "账户唯一识别")
+    @Schema(description = "账户唯一识别")
     private String accountCode;
 
     @Column(name = "token")
-    @ApiModelProperty(value = "token uuid")
+    @Schema(description = "token uuid")
     private String token;
 
     @Column(name = "create_time")

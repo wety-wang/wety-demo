@@ -1,9 +1,8 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,50 +11,50 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "general_resource")
-@ApiModel(description = "文件资源表，用于统一记录系统中的资源，例如上传的图片")
+@Schema(description = "文件资源表，用于统一记录系统中的资源，例如上传的图片")
 public class GeneralResourceEntity implements Serializable {
 
     private static final long serialVersionUID = 2586769562079131282L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "数据主键")
+    @Schema(description = "数据主键")
     private Long id;
 
-    @Column(name = "code")
-    @ApiModelProperty(value = "资源code")
+    @Column(name = "code", nullable = false, length = 40)
+    @Schema(description = "资源code")
     private String code;
 
     @Column(name = "name")
-    @ApiModelProperty(value = "资源名称(eg:background.png)")
+    @Schema(description = "资源名称(eg:background.png)")
     private String name;
 
-    @Column(name = "uri")
-    @ApiModelProperty(value = "资源访问路径，在前面加上域名就能直接访问的，以/开头")
+    @Column(name = "uri", length = 1000)
+    @Schema(description = "资源访问路径，在前面加上域名就能直接访问的，以/开头")
     private String uri;
 
     @Column(name = "original")
-    @ApiModelProperty(value = "原始文件名")
+    @Schema(description = "原始文件名")
     private String original;
 
-    @Column(name = "path")
-    @ApiModelProperty(value = "资源路径，该路径是相对于应用根目录的路径")
+    @Column(name = "path", length = 1000)
+    @Schema(description = "资源路径，该路径是相对于应用根目录的路径")
     private String path;
 
-    @Column(name = "absolute_path")
-    @ApiModelProperty(value = "绝对路径，该路径是相对于应用根目录的路径")
+    @Column(name = "absolute_path", length = 1000)
+    @Schema(description = "绝对路径，该路径是文件相对于服务器的绝对路径")
     private String absolutePath;
 
-    @Column(name = "owner_code")
-    @ApiModelProperty(value = "资源拥有者编号，不同的业务自己设置和查询，一个业务记录对应多个资源时借助该编号")
+    @Column(name = "owner_code", length = 40)
+    @Schema(description = "资源拥有者编号，不同的业务自己设置和查询，一个业务记录对应多个资源时借助该编号")
     private String ownerCode;
 
     @Column(name = "create_time")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     @Column(name = "update_time")
-    @ApiModelProperty(value = "修改时间")
+    @Schema(description = "修改时间")
     private Date updateTime;
 
     public Long getId() {

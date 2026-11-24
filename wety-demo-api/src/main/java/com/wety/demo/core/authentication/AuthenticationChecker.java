@@ -1,6 +1,6 @@
 package com.wety.demo.core.authentication;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 认证接口<br>

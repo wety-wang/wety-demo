@@ -1,43 +1,42 @@
 package com.wety.demo.module.common.vo;
 
 import com.wety.demo.common.entity.AccountEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 登录返回账户信息 VO。
  *
  * @author wety
  */
-@ApiModel(description = "账户信息vo")
+@Schema(description = "账户信息vo")
 public class AccountVo {
 
     /** 账号业务编码。 */
-    @ApiModelProperty(value = "账号code")
+    @Schema(description = "账号code")
     private String accountCode;
 
     /** 登录名。 */
-    @ApiModelProperty(value = "登录名")
+    @Schema(description = "登录名")
     private String loginName;
 
     /** 用户姓名。 */
-    @ApiModelProperty(value = "用户姓名")
+    @Schema(description = "用户姓名")
     private String userName;
 
     /** 登录会话 Token。 */
-    @ApiModelProperty(value = "token")
+    @Schema(description = "token")
     private String token;
 
     /** 是否内置超级管理员：1-是，0-否。 */
-    @ApiModelProperty(value = "是否内置超级管理员：1-是，0-否")
+    @Schema(description = "是否内置超级管理员：1-是，0-否")
     private Integer superAdmin;
 
     /** 主部门业务编码。 */
-    @ApiModelProperty(value = "主部门编码")
+    @Schema(description = "主部门编码")
     private String primaryDeptCode;
 
     /** 主部门名称。 */
-    @ApiModelProperty(value = "主部门名称")
+    @Schema(description = "主部门名称")
     private String primaryDeptName;
 
     public AccountVo(AccountEntity accountEntity, String token) {

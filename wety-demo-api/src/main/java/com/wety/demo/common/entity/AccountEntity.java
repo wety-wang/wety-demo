@@ -1,9 +1,8 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,74 +11,74 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "account")
-@ApiModel(description = "账户信息表")
+@Schema(description = "账户信息表")
 public class AccountEntity implements Serializable {
 
     private static final long serialVersionUID = 5821201569490544457L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "id")
+    @Schema(description = "id")
     private Long id;
 
-    @Column(name = "code")
-    @ApiModelProperty(value = "账户唯一识别，修改操作时必须带着")
+    @Column(name = "code", nullable = false)
+    @Schema(description = "账户唯一识别，修改操作时必须带着")
     private String code;
 
     @Column(name = "login_name")
-    @ApiModelProperty(value = "登录名")
+    @Schema(description = "登录名")
     private String loginName;
 
     @Column(name = "user_name")
-    @ApiModelProperty(value = "用户姓名")
+    @Schema(description = "用户姓名")
     private String userName;
 
     @Column(name = "password")
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
-    @Column(name = "disabled")
-    @ApiModelProperty(value = "是否禁用：0未禁用 1已禁用")
+    @Column(name = "disabled", nullable = false)
+    @Schema(description = "是否禁用：0未禁用 1已禁用")
     private Integer disabled;
 
     @Column(name = "email")
-    @ApiModelProperty(value = "邮箱地址")
+    @Schema(description = "邮箱地址")
     private String email;
 
     @Column(name = "phone_number")
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String phoneNumber;
 
     @Column(name = "type")
-    @ApiModelProperty(value = "账户类型:admin表示系统管理员；normal表示普通账户")
+    @Schema(description = "账户类型:admin表示系统管理员；normal表示普通账户")
     private String type;
 
     /** 主部门业务编码（冗余字段，便于列表展示与数据权限过滤）。 */
     @Column(name = "primary_dept_code", length = 40)
-    @ApiModelProperty(value = "主部门业务编码")
+    @Schema(description = "主部门业务编码")
     private String primaryDeptCode;
 
     /** 是否内置超级管理员：0-否，1-是。 */
-    @Column(name = "super_admin")
-    @ApiModelProperty(value = "是否内置超级管理员：0-否，1-是")
+    @Column(name = "super_admin", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "是否内置超级管理员：0-否，1-是")
     private Integer superAdmin;
 
     /** 创建人业务编码。 */
     @Column(name = "create_user", length = 40)
-    @ApiModelProperty(value = "创建人业务编码")
+    @Schema(description = "创建人业务编码")
     private String createUser;
 
     /** 是否删除：0-否，1-是。 */
-    @Column(name = "deleted")
-    @ApiModelProperty(value = "是否删除：0-否，1-是")
+    @Column(name = "deleted", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "是否删除：0-否，1-是")
     private Integer deleted;
 
     @Column(name = "create_time")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     @Column(name = "update_time")
-    @ApiModelProperty(value = "修改时间")
+    @Schema(description = "修改时间")
     private Date updateTime;
 
     public AccountEntity() {

@@ -1,20 +1,19 @@
 package com.wety.demo.module.organization.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 启停岗位参数。
  */
-@ApiModel(value = "PositionStatusUpdateDTO", description = "启停岗位参数")
+@Schema(name = "PositionStatusUpdateDTO", description = "启停岗位参数")
 public class PositionStatusUpdateDTO {
 
     /** 岗位业务编码。 */
-    @ApiModelProperty(value = "岗位业务编码", required = true)
+    @Schema(description = "岗位业务编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String code;
 
     /** 目标状态：1-启用，0-停用。 */
-    @ApiModelProperty(value = "目标状态：1-启用，0-停用", required = true)
+    @Schema(description = "目标状态：1-启用，0-停用", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer status;
 
     public String getCode() {

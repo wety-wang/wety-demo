@@ -1,7 +1,6 @@
 package com.wety.demo.core.annotation;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -12,27 +11,27 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author wety
  */
-@ApiModel(description = "权限定义")
+@Schema(description = "权限定义")
 public class PermissionHolder {
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Permission permission;
 
-    @ApiModelProperty(value = "下级权限数组")
+    @Schema(description = "下级权限数组")
     private List<PermissionHolder> children;
 
-    @ApiModelProperty(value = "权限码，全局唯一")
+    @Schema(description = "权限码，全局唯一")
     private String code;
 
-    @ApiModelProperty(value = "权限名称")
+    @Schema(description = "权限名称")
     private String name;
 
-    @ApiModelProperty(value = "上级权限编码")
+    @Schema(description = "上级权限编码")
     private String parentCode;
 
-    @ApiModelProperty(value = "是否是叶子权限")
+    @Schema(description = "是否是叶子权限")
     private String leafNode;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Set<String> dependencyCodes = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     private int order;

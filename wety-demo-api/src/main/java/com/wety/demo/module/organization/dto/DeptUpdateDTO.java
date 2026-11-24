@@ -1,44 +1,43 @@
 package com.wety.demo.module.organization.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 修改部门参数。
  */
-@ApiModel(value = "DeptUpdateDTO", description = "修改部门参数")
+@Schema(name = "DeptUpdateDTO", description = "修改部门参数")
 public class DeptUpdateDTO {
 
     /** 部门业务编码。 */
-    @ApiModelProperty(value = "部门业务编码", required = true)
+    @Schema(description = "部门业务编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String code;
 
     /** 父部门业务编码（不可设为自身或自身子孙节点）。 */
-    @ApiModelProperty(value = "父部门编码", required = true)
+    @Schema(description = "父部门编码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String parentCode;
 
     /** 部门名称。 */
-    @ApiModelProperty(value = "部门名称", required = true)
+    @Schema(description = "部门名称", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 
     /** 排序号。 */
-    @ApiModelProperty(value = "排序号")
+    @Schema(description = "排序号")
     private Integer sortOrder;
 
     /** 负责人账号编码。 */
-    @ApiModelProperty(value = "负责人账号编码")
+    @Schema(description = "负责人账号编码")
     private String leaderAccountCode;
 
     /** 联系电话。 */
-    @ApiModelProperty(value = "联系电话")
+    @Schema(description = "联系电话")
     private String phone;
 
     /** 联系邮箱。 */
-    @ApiModelProperty(value = "联系邮箱")
+    @Schema(description = "联系邮箱")
     private String email;
 
     /** 状态：1-启用，0-停用。 */
-    @ApiModelProperty(value = "状态：1-启用，0-停用")
+    @Schema(description = "状态：1-启用，0-停用")
     private Integer status;
 
     public String getCode() {

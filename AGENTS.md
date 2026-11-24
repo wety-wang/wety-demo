@@ -267,6 +267,7 @@ Optional<ProductEntity> findAvailableByCode(@Param("code") String code);
 - 新代码优先使用 `LocalDateTime`；仅在实体字段使用旧版 `Date` 或 `Calendar` 时使用 `@Temporal`。
 - Entity 之间原则上不建立复杂双向对象关联；表关联关系按项目约定通过业务 code 维护。
 - 所有正常业务查询必须过滤软删除数据。
+- Entity 字段映射必须与数据库 DDL（`deploy/sql/db-init-ddl.sql` 及增量迁移脚本）严格逐一对齐：所有 `VARCHAR` 长度（如 `length = 40`/`1000`/`2048`）、非空约束（`nullable = false`）以及 `TINYINT`/`LONGTEXT` 等列类型（`columnDefinition`）均需在 `@Column` 中显式声明一致，避免 Hibernate `ddl-auto: update` 启动时自动修改表结构。
 
 ## 10. DTO、VO 与对象转换规范
 

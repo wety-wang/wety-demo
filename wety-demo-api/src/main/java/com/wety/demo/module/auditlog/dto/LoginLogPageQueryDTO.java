@@ -5,8 +5,7 @@ import com.wety.demo.common.dto.PageableDTO;
 import com.wety.demo.common.jpa.CriteriaExpression;
 import com.wety.demo.common.jpa.CriteriaQueryObject;
 import com.wety.demo.common.jpa.ExpressionType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 import java.util.List;
@@ -16,42 +15,42 @@ import java.util.List;
  *
  * @author wety
  */
-@ApiModel(value = "LoginLogPageQueryDTO", description = "登录日志分页查询参数")
+@Schema(name = "LoginLogPageQueryDTO", description = "登录日志分页查询参数")
 public class LoginLogPageQueryDTO extends PageableDTO implements CriteriaQueryObject {
 
     /**
      * 登录名，模糊查询
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "登录名, 模糊搜索")
+    @Schema(description = "登录名, 模糊搜索")
     private String accountLoginName;
 
     /**
      * 用户姓名，模糊查询
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "用户名, 模糊搜索")
+    @Schema(description = "用户名, 模糊搜索")
     private String accountName;
 
     /**
      * 操作结果，精确匹配
      */
     @CriteriaExpression(expressionType = ExpressionType.EQUAL)
-    @ApiModelProperty(value = "操作结果")
+    @Schema(description = "操作结果")
     private String result;
 
     /**
      * 客户端IP，模糊查询
      */
     @CriteriaExpression(expressionType = ExpressionType.LIKE)
-    @ApiModelProperty(value = "客户端IP, 模糊搜索")
+    @Schema(description = "客户端IP, 模糊搜索")
     private String clientIp;
 
     /**
      * 操作时间，模糊查询
      */
     @CriteriaExpression(expressionType = ExpressionType.BEWTEEN)
-    @ApiModelProperty(value = "操作时间, 模糊搜索")
+    @Schema(description = "操作时间, 模糊搜索")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private List<Date> operationTime;
 

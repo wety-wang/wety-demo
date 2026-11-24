@@ -1,6 +1,6 @@
 package com.wety.demo.common.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
@@ -10,13 +10,13 @@ public class CodeNameDTO {
     /**
      * code
      */
-    @ApiModelProperty(value = "code")
+    @Schema(description = "code")
     private String code;
 
     /**
      * 名称
      */
-    @ApiModelProperty(value = "名称")
+    @Schema(description = "名称")
     private String name;
 
     public String getCode() {

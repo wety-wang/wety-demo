@@ -1,7 +1,6 @@
 package com.wety.demo.module.user.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
@@ -10,19 +9,19 @@ import java.util.List;
  *
  * @author wety
  */
-@ApiModel(value = "RoleAddDTO", description = "新增角色参数")
+@Schema(name = "RoleAddDTO", description = "新增角色参数")
 public class RoleAddDTO {
 
     /** 角色名称。 */
-    @ApiModelProperty(value = "角色名称", required = true)
+    @Schema(description = "角色名称", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 
     /** 数据权限范围（可选，默认 5-仅本人）。 */
-    @ApiModelProperty(value = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
+    @Schema(description = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
     private Integer dataScope;
 
     /** 自定义部门编码列表（当 dataScope == 2 时生效）。 */
-    @ApiModelProperty(value = "自定义部门编码列表（当 dataScope == 2 时必填）")
+    @Schema(description = "自定义部门编码列表（当 dataScope == 2 时必填）")
     private List<String> deptCodes;
 
     public String getName() {

@@ -11,8 +11,8 @@ import com.wety.demo.module.auditlog.service.OperationLogService;
 import com.wety.demo.module.auditlog.util.LogDescriptionBuilder;
 import com.wety.demo.module.auditlog.vo.OperationLogInfoVO;
 import com.wety.demo.module.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/bac/log/operationLog")
-@Api(tags = "102-02-00 审计日志-操作日志", produces = "application/json", consumes = "application/json")
+@Tag(name = "102-02-00 审计日志-操作日志")
 @Permission(code = "102-02-00", parentCode = "102-00-00", name = "操作日志", order = 2)
 public class OperationLogController {
 
@@ -50,7 +50,7 @@ public class OperationLogController {
             descriptionTemplate = "#desc"
     )
     @RequestMapping(value = "/listPageable", method = RequestMethod.POST)
-    @ApiOperation(value = "列表页")
+    @Operation(summary = "列表页")
     @Permission(code = "102-02-01", parentCode = "102-02-00", name = "查看列表", leafNode = GlobalConst.YES, order = 1)
     public Page<OperationLogInfoVO> listPageable(@RequestBody OperationLogPageQueryDTO queryDTO){
         return operationLogService.listOperationLogPageable(queryDTO);
@@ -60,7 +60,7 @@ public class OperationLogController {
      * 用户列表查询
      */
     @RequestMapping(value = "/listAllUser", method = RequestMethod.GET)
-    @ApiOperation(value = "用户列表")
+    @Operation(summary = "用户列表")
     public List<CodeNameDTO> listAllUser(){
         return userService.listAll();
     }
@@ -69,7 +69,7 @@ public class OperationLogController {
      * 模块树查询：返回分层的权限（模块）树
      */
     @RequestMapping(value = "/queryModuleTree", method = RequestMethod.GET)
-    @ApiOperation(value = "模块树")
+    @Operation(summary = "模块树")
     public List<PermissionHolder> queryModuleTree(){
         // 获取完整的权限树（包含方法级叶子权限）
         List<PermissionHolder> fullTree = PermissionCache.getPermissionHierarchicalList();

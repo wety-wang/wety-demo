@@ -1,25 +1,24 @@
 package com.wety.demo.module.user.vo;
 
 import com.wety.demo.common.entity.AccountRoleLinkEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author wety
  */
-@ApiModel(value = "RoleUserInfoVO", description = "角色用户列表返回参数")
+@Schema(name = "RoleUserInfoVO", description = "角色用户列表返回参数")
 public class RoleUserInfoVO {
 
-    @ApiModelProperty("角色code")
+    @Schema(description = "角色code")
     private String roleCode;
 
-    @ApiModelProperty("角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
-    @ApiModelProperty("用户code")
+    @Schema(description = "用户code")
     private String accountCode;
 
-    @ApiModelProperty("用户姓名")
+    @Schema(description = "用户姓名")
     private String accountName;
 
     public RoleUserInfoVO(AccountRoleLinkEntity linkEntity) {

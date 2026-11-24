@@ -1,14 +1,13 @@
 package com.wety.demo.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,7 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "position")
-@ApiModel(description = "岗位信息表")
+@Schema(description = "岗位信息表")
 public class PositionEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,62 +24,62 @@ public class PositionEntity implements Serializable {
     /** 数据库主键。 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "数据库主键")
+    @Schema(description = "数据库主键")
     private Long id;
 
     /** 岗位唯一业务编码。 */
     @Column(name = "code", nullable = false, length = 40)
-    @ApiModelProperty(value = "岗位唯一业务编码")
+    @Schema(description = "岗位唯一业务编码")
     private String code;
 
     /** 岗位标识编码（如 DEV、PM）。 */
     @Column(name = "post_code", nullable = false, length = 64)
-    @ApiModelProperty(value = "岗位标识编码")
+    @Schema(description = "岗位标识编码")
     private String postCode;
 
     /** 岗位名称。 */
     @Column(name = "name", nullable = false, length = 100)
-    @ApiModelProperty(value = "岗位名称")
+    @Schema(description = "岗位名称")
     private String name;
 
     /** 排序号，升序排列。 */
     @Column(name = "sort_order", nullable = false)
-    @ApiModelProperty(value = "排序号")
+    @Schema(description = "排序号")
     private Integer sortOrder;
 
     /** 状态：1-启用，0-停用。 */
-    @Column(name = "status", nullable = false)
-    @ApiModelProperty(value = "状态：1-启用，0-停用")
+    @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "状态：1-启用，0-停用")
     private Integer status;
 
     /** 岗位备注。 */
     @Column(name = "remark", length = 500)
-    @ApiModelProperty(value = "岗位备注")
+    @Schema(description = "岗位备注")
     private String remark;
 
     /** 创建人业务编码。 */
     @Column(name = "create_user", length = 40)
-    @ApiModelProperty(value = "创建人业务编码")
+    @Schema(description = "创建人业务编码")
     private String createUser;
 
     /** 更新人业务编码。 */
     @Column(name = "update_user", length = 40)
-    @ApiModelProperty(value = "更新人业务编码")
+    @Schema(description = "更新人业务编码")
     private String updateUser;
 
     /** 创建时间。 */
     @Column(name = "create_time")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
     /** 更新时间。 */
     @Column(name = "update_time")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private Date updateTime;
 
     /** 是否删除：0-否，1-是。 */
-    @Column(name = "deleted", nullable = false)
-    @ApiModelProperty(value = "是否删除：0-否，1-是")
+    @Column(name = "deleted", nullable = false, columnDefinition = "TINYINT")
+    @Schema(description = "是否删除：0-否，1-是")
     private Integer deleted;
 
     public Long getId() {

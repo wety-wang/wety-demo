@@ -1,7 +1,7 @@
 package com.wety.demo.common.dto;
 
 import com.wety.demo.common.exception.CustomException;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
@@ -18,16 +18,16 @@ import java.util.List;
  */
 public class PageableDTO {
 
-    @ApiModelProperty(value = "每页多少条", required = true, example = "10")
+    @Schema(description = "每页多少条", requiredMode = Schema.RequiredMode.REQUIRED, example = "10")
     private Integer pageSize;
 
-    @ApiModelProperty(value = "查询第几页，从1开始", required = true, example = "1")
+    @Schema(description = "查询第几页，从1开始", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     private Integer pageNumber;
 
-    @ApiModelProperty(value = "排序字段", example = "createTime")
+    @Schema(description = "排序字段", example = "createTime")
     private String column;
 
-    @ApiModelProperty(value = "排序方式", example = "desc")
+    @Schema(description = "排序方式", example = "desc")
     private String order;
 
     private static final String MISSING_PAGE_NUMBER_MESSAGE = "缺少参数[pageNumber]";
@@ -48,7 +48,7 @@ public class PageableDTO {
      *
      * @return
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public Integer getPageSize() {
         if (null == pageSize) {
             throw new CustomException(MISSING_PAGE_SIZE_MESSAGE);
@@ -65,7 +65,7 @@ public class PageableDTO {
      *
      * @return
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public Integer getPageNumber() {
         if (null == pageNumber) {
             throw new CustomException(MISSING_PAGE_NUMBER_MESSAGE);
@@ -76,7 +76,7 @@ public class PageableDTO {
     /**
      * 实际页码数，从0开始
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public Integer getRealPageNumber() {
         return getPageNumber() - 1;
     }
@@ -101,7 +101,7 @@ public class PageableDTO {
         this.order = order;
     }
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public Pageable getPageable() {
         return getPageable((Sort.Order) null);
     }
@@ -111,7 +111,7 @@ public class PageableDTO {
      * @param defaultOrders
      * @return
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public Pageable getPageableWithDefault(Sort.Order... defaultOrders) {
         if (null == pageNumber) {
             throw new CustomException(MISSING_PAGE_NUMBER_MESSAGE);
@@ -144,7 +144,7 @@ public class PageableDTO {
      *
      * @return
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public Pageable getPageable(Sort.Order... orders) {
         if (null == pageNumber) {
             throw new CustomException(MISSING_PAGE_NUMBER_MESSAGE);
