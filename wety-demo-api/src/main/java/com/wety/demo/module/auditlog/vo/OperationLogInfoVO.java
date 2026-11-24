@@ -32,6 +32,14 @@ public class OperationLogInfoVO {
     @ApiModelProperty("登录账号用户名")
     private String accountName;
 
+    /** 操作人所属主部门编码。 */
+    @ApiModelProperty("操作人所属主部门编码")
+    private String deptCode;
+
+    /** 操作人所属主部门名称。 */
+    @ApiModelProperty("操作人所属主部门名称")
+    private String deptName;
+
     @ApiModelProperty("客户端IP")
     private String clientIp;
 
@@ -60,6 +68,7 @@ public class OperationLogInfoVO {
         this.accountCode = entity.getAccountCode();
         this.accountLoginName = entity.getAccountLoginName();
         this.accountName = entity.getAccountName();
+        this.deptCode = entity.getDeptCode();
         this.clientIp = entity.getClientIp();
         this.operationTime = entity.getOperationTime();
         this.operationType = entity.getOperationType();
@@ -115,6 +124,22 @@ public class OperationLogInfoVO {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     public String getClientIp() {

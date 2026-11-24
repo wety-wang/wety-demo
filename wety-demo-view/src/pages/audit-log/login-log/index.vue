@@ -27,6 +27,7 @@ const columns: TableColumnType<LoginLogInfoVO>[] = [
   },
   { title: '登录名', dataIndex: 'accountLoginName', width: 100, sorter: true },
   { title: '用户名', dataIndex: 'accountName', width: 140, sorter: true },
+  { title: '所属部门', dataIndex: 'deptName', width: 140, customRender: ({ text }) => text || '-' },
   { title: '客户端IP', dataIndex: 'clientIp', width: 100 },
   {
     title: '结果',

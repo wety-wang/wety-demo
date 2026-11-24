@@ -3,6 +3,8 @@ package com.wety.demo.common.jpa.support;
 import com.wety.demo.common.exception.CustomException;
 import com.wety.demo.common.jpa.CriteriaExpression;
 import com.wety.demo.common.jpa.CriteriaQueryObject;
+import com.wety.demo.core.datascope.DataScopeContext;
+import com.wety.demo.core.misc.AppThreadLocal;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.Attribute;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -88,7 +91,80 @@ public class BaseRepositoryImpl<T, I> extends SimpleJpaRepository<T, I> implemen
                 predicates.add(predicate);
             }
         }
+
+        // 若当前线程激活了数据权限上下文，自动拼装数据权限过滤条件
+        Predicate dataScopePredicate = buildDataScopePredicate(root, cb);
+        if (dataScopePredicate != null) {
+            predicates.add(dataScopePredicate);
+        }
+
         return cb.and(predicates.toArray(new Predicate[0]));
+    }
+
+    /**
+     * 根据当前线程激活的 {@link DataScopeContext} 构建 JPA 数据权限过滤谓词。
+     *
+     * <p>若当前查询实体既不含 deptField 也不含 userField，说明属于辅助表查询，自动跳过注入；
+     * 若实体至少包含其中一个字段但无任何可见范围，则返回恒假条件（disjunction）防止越权。</p>
+     *
+     * @param root 查询根实体
+     * @param cb   CriteriaBuilder
+     * @return 数据权限过滤谓词，无需过滤时返回 null
+     */
+    private Predicate buildDataScopePredicate(Root<T> root, CriteriaBuilder cb) {
+        DataScopeContext context = AppThreadLocal.getInstance().getDataScopeContext();
+        if (context == null || context.isAll()) {
+            return null;
+        }
+
+        boolean hasDeptAttr = StringUtils.isNotBlank(context.getDeptField())
+                && hasEntityAttribute(root, context.getDeptField());
+        boolean hasUserAttr = StringUtils.isNotBlank(context.getUserField())
+                && hasEntityAttribute(root, context.getUserField());
+
+        // 当前实体与注解配置的部门/用户字段均无关时跳过，避免误杀同一方法内的辅助查询
+        if (!hasDeptAttr && !hasUserAttr) {
+            log.debug("实体 {} 不包含数据权限字段 [deptField={}, userField={}]，跳过自动过滤",
+                    root.getJavaType().getSimpleName(), context.getDeptField(), context.getUserField());
+            return null;
+        }
+
+        List<Predicate> scopeOrPredicates = new ArrayList<>();
+        if (hasDeptAttr && !CollectionUtils.isEmpty(context.getAllowedDeptCodes())) {
+            In<Object> in = cb.in(root.get(context.getDeptField()));
+            for (String deptCode : context.getAllowedDeptCodes()) {
+                in.value(deptCode);
+            }
+            scopeOrPredicates.add(in);
+        }
+
+        if (hasUserAttr && context.isIncludeSelf() && StringUtils.isNotBlank(context.getCurrentUserCode())) {
+            scopeOrPredicates.add(cb.equal(root.get(context.getUserField()), context.getCurrentUserCode()));
+        }
+
+        if (scopeOrPredicates.isEmpty()) {
+            return cb.disjunction();
+        }
+        if (scopeOrPredicates.size() == 1) {
+            return scopeOrPredicates.get(0);
+        }
+        return cb.or(scopeOrPredicates.toArray(new Predicate[0]));
+    }
+
+    /**
+     * 通过 JPA Metamodel 安全检查目标实体是否包含指定属性。
+     *
+     * @param root          查询根实体
+     * @param attributeName 属性名称
+     * @return true 表示存在该属性
+     */
+    private boolean hasEntityAttribute(Root<T> root, String attributeName) {
+        for (Attribute<? super T, ?> attribute : root.getModel().getAttributes()) {
+            if (attributeName.equals(attribute.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")

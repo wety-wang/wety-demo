@@ -54,6 +54,26 @@ public class AccountEntity implements Serializable {
     @ApiModelProperty(value = "账户类型:admin表示系统管理员；normal表示普通账户")
     private String type;
 
+    /** 主部门业务编码（冗余字段，便于列表展示与数据权限过滤）。 */
+    @Column(name = "primary_dept_code", length = 40)
+    @ApiModelProperty(value = "主部门业务编码")
+    private String primaryDeptCode;
+
+    /** 是否内置超级管理员：0-否，1-是。 */
+    @Column(name = "super_admin")
+    @ApiModelProperty(value = "是否内置超级管理员：0-否，1-是")
+    private Integer superAdmin;
+
+    /** 创建人业务编码。 */
+    @Column(name = "create_user", length = 40)
+    @ApiModelProperty(value = "创建人业务编码")
+    private String createUser;
+
+    /** 是否删除：0-否，1-是。 */
+    @Column(name = "deleted")
+    @ApiModelProperty(value = "是否删除：0-否，1-是")
+    private Integer deleted;
+
     @Column(name = "create_time")
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
@@ -75,6 +95,10 @@ public class AccountEntity implements Serializable {
         this.email = entity.getEmail();
         this.phoneNumber = entity.getPhoneNumber();
         this.type = entity.getType();
+        this.primaryDeptCode = entity.getPrimaryDeptCode();
+        this.superAdmin = entity.getSuperAdmin();
+        this.createUser = entity.getCreateUser();
+        this.deleted = entity.getDeleted();
         this.createTime = entity.getCreateTime();
         this.updateTime = entity.getUpdateTime();
     }
@@ -151,6 +175,38 @@ public class AccountEntity implements Serializable {
         this.type = type;
     }
 
+    public String getPrimaryDeptCode() {
+        return primaryDeptCode;
+    }
+
+    public void setPrimaryDeptCode(String primaryDeptCode) {
+        this.primaryDeptCode = primaryDeptCode;
+    }
+
+    public Integer getSuperAdmin() {
+        return superAdmin;
+    }
+
+    public void setSuperAdmin(Integer superAdmin) {
+        this.superAdmin = superAdmin;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -174,11 +230,14 @@ public class AccountEntity implements Serializable {
                 ", code='" + code + '\'' +
                 ", loginName='" + loginName + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
                 ", disabled=" + disabled +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", type='" + type + '\'' +
+                ", primaryDeptCode='" + primaryDeptCode + '\'' +
+                ", superAdmin=" + superAdmin +
+                ", createUser='" + createUser + '\'' +
+                ", deleted=" + deleted +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

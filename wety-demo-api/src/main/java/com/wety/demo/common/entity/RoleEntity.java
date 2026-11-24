@@ -25,6 +25,11 @@ public class RoleEntity {
     @Column(name = "name")
     private String name;
 
+    /** 数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人。 */
+    @ApiModelProperty(value = "数据权限范围：1-全部，2-自定义部门，3-本部门，4-本部门及以下，5-仅本人")
+    @Column(name = "data_scope")
+    private Integer dataScope;
+
     @ApiModelProperty(value = "是否删除 1已删除，0未删除", example = "")
     @Column(name = "deleted")
     private Integer deleted;
@@ -59,6 +64,14 @@ public class RoleEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getDataScope() {
+        return dataScope;
+    }
+
+    public void setDataScope(Integer dataScope) {
+        this.dataScope = dataScope;
     }
 
     public Integer getDeleted() {

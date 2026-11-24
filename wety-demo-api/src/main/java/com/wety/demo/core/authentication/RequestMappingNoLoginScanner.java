@@ -4,9 +4,8 @@ import com.wety.demo.common.util.ClassUtil;
 import com.wety.demo.core.annotation.NoLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.lang.reflect.Method;
@@ -53,14 +52,11 @@ public class RequestMappingNoLoginScanner {
         List<String> noLoginList = new ArrayList<>();
 
         String pathOnClass = "";
-        RequestMapping[] classRequestMappings = clazz.getAnnotationsByType(RequestMapping.class);
-
-        if (classRequestMappings.length > 1) {
-            throw new Exception("发现多个RequestMapping:"+clazz.getName());
-        } else if (classRequestMappings.length == 1) {
-            pathOnClass = getPathOnRequestMapping(classRequestMappings[0]);
+        RequestMapping classRequestMapping = AnnotatedElementUtils.findMergedAnnotation(clazz, RequestMapping.class);
+        if (classRequestMapping != null) {
+            pathOnClass = getPathOnRequestMapping(classRequestMapping);
         }
-        // 遍历方法上的RequestMapping和NoLogin注解
+        // 遍历方法上的 RequestMapping（含 GetMapping/PostMapping 等组合注解）和 NoLogin 注解
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
             List<String> methodList = extractClassRequiestMappingNoLogins(method);
@@ -73,7 +69,7 @@ public class RequestMappingNoLoginScanner {
     }
 
     /**
-     * 提取方法上的RequestMapping和NoLogin的关联
+     * 提取方法上的RequestMapping（含GetMapping/PostMapping等组合注解）和NoLogin的关联
      *
      * @param method
      *
@@ -87,18 +83,9 @@ public class RequestMappingNoLoginScanner {
             return Collections.emptyList();
         }
 
-        // 当Controller中只有一个方法时，RequestMapping注解可以不写path，这里需要处理
-        GetMapping[] getMappings = method.getAnnotationsByType(GetMapping.class);
-        if (getMappings.length != 0) {
-            return Collections.singletonList(getPathOnGetMapping(getMappings[0]));
-        }
-        PostMapping[] postMappings = method.getAnnotationsByType(PostMapping.class);
-        if (postMappings.length != 0) {
-            return Collections.singletonList(getPathOnPostMapping(postMappings[0]));
-        }
-        RequestMapping[] requestMappings = method.getAnnotationsByType(RequestMapping.class);
-        if (requestMappings.length != 0) {
-            return Collections.singletonList(getPathOnRequestMapping(requestMappings[0]));
+        RequestMapping requestMapping = AnnotatedElementUtils.findMergedAnnotation(method, RequestMapping.class);
+        if (requestMapping != null) {
+            return Collections.singletonList(getPathOnRequestMapping(requestMapping));
         }
 
         throw new Exception("有权限定义，但未指定GetMapping/PostMapping/RequestMapping: "+nologins[0]);
@@ -122,46 +109,6 @@ public class RequestMappingNoLoginScanner {
             return pathes[0];
         }
         throw new Exception("RequestMapping未指定path或value");
-    }
-
-    /**
-     * 提取GetMapping注解上的第一个path/value属性值，如果不存在则抛出异常
-     *
-     * @param getMapping GetMapping
-     *
-     * @return String path
-     *
-     * @throws Exception GetMapping未指定path或value
-     */
-    private String getPathOnGetMapping(GetMapping getMapping) throws Exception {
-        String[] values = getMapping.value();
-        String[] pathes = getMapping.path();
-        if (values.length > 0) {
-            return values[0];
-        } else if (pathes.length > 0) {
-            return pathes[0];
-        }
-        throw new Exception("GetMapping未指定path或value");
-    }
-
-    /**
-     * 提取PostMapping注解上的第一个path/value属性值，如果不存在则抛出异常
-     *
-     * @param postMapping PostMapping
-     *
-     * @return String path
-     *
-     * @throws Exception PostMapping未指定path或value
-     */
-    private String getPathOnPostMapping(PostMapping postMapping) throws Exception {
-        String[] values = postMapping.value();
-        String[] pathes = postMapping.path();
-        if (values.length > 0) {
-            return values[0];
-        } else if (pathes.length > 0) {
-            return pathes[0];
-        }
-        throw new Exception("PostMapping未指定path或value");
     }
 
 }

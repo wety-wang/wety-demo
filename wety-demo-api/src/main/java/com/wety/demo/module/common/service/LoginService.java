@@ -5,6 +5,8 @@ import com.wety.demo.common.entity.AccountEntity;
 import com.wety.demo.common.entity.AccountEntityRepository;
 import com.wety.demo.common.entity.AccountSessionEntity;
 import com.wety.demo.common.entity.AccountSessionEntityRepository;
+import com.wety.demo.common.entity.DeptEntity;
+import com.wety.demo.common.entity.DeptEntityRepository;
 import com.wety.demo.common.exception.CustomException;
 import com.wety.demo.common.util.SM2Utils;
 import com.wety.demo.common.util.UUIDGenerator;
@@ -48,6 +50,9 @@ public class LoginService {
     @Resource
     private LoginLogService loginLogService;
 
+    @Resource
+    private DeptEntityRepository deptEntityRepository;
+
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public AccountVo login(LoginDTO loginDTO, HttpSession session) {
         Assert.notNull(loginDTO.getLoginName(), "用户名不能为空，请重新确认");
@@ -58,9 +63,9 @@ public class LoginService {
         checkImage(loginDTO.getCheckCode(), session);
 
         AccountEntity accountEntity = checkAccount(loginDTO);
-        loginLogService.addAuditLog(loginDTO.getLoginName(), !Objects.isNull(accountEntity));
+        loginLogService.addAuditLog(loginDTO.getLoginName(), accountEntity, !Objects.isNull(accountEntity));
 
-        if(accountEntity == null){
+        if (accountEntity == null) {
             return null;
         }
 
@@ -69,7 +74,13 @@ public class LoginService {
 
         saveAccountSession(accountEntity, token);
 
-        return new AccountVo(accountEntity, token);
+        AccountVo accountVo = new AccountVo(accountEntity, token);
+        if (StringUtils.isNotBlank(accountEntity.getPrimaryDeptCode())) {
+            deptEntityRepository.findByCodeAndDeleted(accountEntity.getPrimaryDeptCode(), GlobalConst.NOT)
+                    .map(DeptEntity::getName)
+                    .ifPresent(accountVo::setPrimaryDeptName);
+        }
+        return accountVo;
     }
 
     private void saveAccountSession(AccountEntity accountEntity, String token) {
@@ -86,14 +97,13 @@ public class LoginService {
     }
 
     /**
-     * 根据用户名和密码来校验用户登录是否有效
+     * 根据用户名和密码来校验用户登录是否有效（仅允许未删除且未禁用账号登录）。
      *
      * @param loginDTO 用户名和密码
-     *
-     * @return 登录有效则返回账号信息，否则返回null
+     * @return 登录有效则返回账号信息，否则返回 null
      */
     private AccountEntity checkAccount(LoginDTO loginDTO) {
-        Optional<AccountEntity> accountEntityOptional = accountEntityRepository.findFirstByLoginName(loginDTO.getLoginName());
+        Optional<AccountEntity> accountEntityOptional = accountEntityRepository.findByLoginNameAndDeleted(loginDTO.getLoginName(), GlobalConst.NOT);
         if (accountEntityOptional.isPresent()) {
             AccountEntity accountEntity = accountEntityOptional.get();
             // 解密前端传入的 SM2 密文

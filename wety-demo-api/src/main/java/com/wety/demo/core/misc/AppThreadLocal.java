@@ -1,6 +1,7 @@
 package com.wety.demo.core.misc;
 
 import com.wety.demo.common.entity.AccountEntity;
+import com.wety.demo.core.datascope.DataScopeContext;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -54,6 +55,11 @@ public class AppThreadLocal extends ThreadLocal<Map<String, Object>> {
     public static final String CLIENT_IP_KEY = "CLIENT_IP";
 
     public static final String REQUEST_RESPONSE_KEY = "REQUEST_RESPONSE";
+
+    /**
+     * 当前线程激活的数据权限上下文 key。
+     */
+    public static final String DATA_SCOPE_CONTEXT_KEY = "DATA_SCOPE_CONTEXT";
 
     /**
      * 获取ThreadLocal实例，单例-双重检测+锁
@@ -240,6 +246,43 @@ public class AppThreadLocal extends ThreadLocal<Map<String, Object>> {
             return (HttpServletResponse) value;
         }
         return null;
+    }
+
+    /**
+     * 绑定当前线程的数据权限上下文。
+     *
+     * @param context 数据权限上下文
+     */
+    public void setDataScopeContext(DataScopeContext context) {
+        confirmBindingExists();
+        getInstance().get().put(DATA_SCOPE_CONTEXT_KEY, context);
+    }
+
+    /**
+     * 获取当前线程绑定的数据权限上下文。
+     *
+     * @return 数据权限上下文，未绑定时返回 null
+     */
+    public DataScopeContext getDataScopeContext() {
+        Map<String, Object> map = getInstance().get();
+        if (map == null) {
+            return null;
+        }
+        Object value = map.get(DATA_SCOPE_CONTEXT_KEY);
+        if (value instanceof DataScopeContext) {
+            return (DataScopeContext) value;
+        }
+        return null;
+    }
+
+    /**
+     * 清理当前线程绑定的数据权限上下文。
+     */
+    public void clearDataScopeContext() {
+        Map<String, Object> map = getInstance().get();
+        if (map != null) {
+            map.remove(DATA_SCOPE_CONTEXT_KEY);
+        }
     }
 
 }

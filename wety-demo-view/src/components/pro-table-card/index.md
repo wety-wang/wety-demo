@@ -190,7 +190,7 @@ function exportByParams() {
 ```vue
 <script setup lang="ts">
 import ProTableCard from '~@/components/pro-table-card/index.vue'
-import { listUserPageable } from '~@/api/user-manage/user'
+import { listUserPageable } from '~@/api/org/user'
 import type { TableColumnType } from 'ant-design-vue'
 
 // 列定义：为操作列设置唯一 key，便于插槽内识别

@@ -6,6 +6,7 @@ import com.wety.demo.core.annotation.Permission;
 import com.wety.demo.core.annotation.PermissionHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -56,14 +57,11 @@ public class RequestMappingPermissionScanner {
         Map<String, PermissionHolder> permissionMapping = new HashMap<>();
 
         String pathOnClass = "";
-        RequestMapping[] classRequestMappings = clazz.getAnnotationsByType(RequestMapping.class);
-
-        if (classRequestMappings.length > 1) {
-            throw new CustomException("发现多个RequestMapping:"+clazz.getName());
-        } else if (classRequestMappings.length == 1) {
-            pathOnClass = getPathOnRequestMapping(classRequestMappings[0], false);
+        RequestMapping classRequestMapping = AnnotatedElementUtils.findMergedAnnotation(clazz, RequestMapping.class);
+        if (classRequestMapping != null) {
+            pathOnClass = getPathOnRequestMapping(classRequestMapping, false);
         }
-        // 遍历方法上的RequestMapping和Permission注解
+        // 遍历方法上的 RequestMapping（含 GetMapping/PostMapping 等派生注解）和 Permission 注解
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
             Map<String, PermissionHolder> methodMappings = extractClassRequiestMappingPermissions(method);
@@ -76,7 +74,7 @@ public class RequestMappingPermissionScanner {
     }
 
     /**
-     * 提取方法上的RequestMapping和Permission的关联
+     * 提取方法上的RequestMapping（含GetMapping/PostMapping等组合注解）和Permission的关联
      *
      * @param method
      *
@@ -89,11 +87,11 @@ public class RequestMappingPermissionScanner {
         Permission[] permissions = method.getAnnotationsByType(Permission.class);
         if (permissions.length > 0) {
             PermissionHolder holder = new PermissionHolder(permissions[0]);
-            RequestMapping[] requestMappings = method.getAnnotationsByType(RequestMapping.class);
-            if (requestMappings.length == 0) {
+            RequestMapping requestMapping = AnnotatedElementUtils.findMergedAnnotation(method, RequestMapping.class);
+            if (requestMapping == null) {
                 throw new CustomException("有权限定义，但未指定RequestMapping: "+holder);
             }
-            String path = getPathOnRequestMapping(requestMappings[0], true);
+            String path = getPathOnRequestMapping(requestMapping, true);
             if (path == null) {
                 throw new CustomException("RequestMapping未指定path或value: "+holder);
             }

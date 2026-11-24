@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,4 +32,12 @@ public interface AccountRoleLinkEntityRepository extends CrudRepository<AccountR
     void deleteByRoleCodeAndAccountCode(String roleCode,String accountCode);
 
     boolean existsByRoleCodeAndAccountCode(String roleCode, String accountCode);
+
+    /**
+     * 批量查询多个账号的角色关联记录。
+     *
+     * @param accountCodes 账号编码集合
+     * @return 关联记录列表
+     */
+    List<AccountRoleLinkEntity> findAllByAccountCodeIn(Collection<String> accountCodes);
 }

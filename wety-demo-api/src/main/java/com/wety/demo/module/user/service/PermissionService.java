@@ -106,8 +106,20 @@ public class PermissionService {
         return listAccountPermission(accountEntity);
     }
 
+    /**
+     * 查询指定账号拥有的全部权限编码。
+     *
+     * <p>内置超级管理员（superAdmin == 1）或兼容存量 admin 类型账号默认拥有全部权限。</p>
+     *
+     * @param accountEntity 账号实体
+     * @return 权限编码列表
+     */
     public List<String> listAccountPermission(AccountEntity accountEntity) {
-        if (AccountTypeConst.ADMIN.equals(accountEntity.getType())) {
+        if (accountEntity == null) {
+            return Collections.emptyList();
+        }
+        if (Integer.valueOf(1).equals(accountEntity.getSuperAdmin())
+                || AccountTypeConst.ADMIN.equals(accountEntity.getType())) {
             return new ArrayList<>(PermissionCache.getPermissionCodePermissionMap().keySet());
         }
 

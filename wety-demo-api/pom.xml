@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.wety</groupId>
-    <artifactId>wety-demo-api</artifactId>
+    <artifactId>backend</artifactId>
     <version>1.0.0</version>
     <name>wety-demo-api</name>
     <description>wety demo</description>
@@ -152,9 +152,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
             </plugin>
         </plugins>
     </build>

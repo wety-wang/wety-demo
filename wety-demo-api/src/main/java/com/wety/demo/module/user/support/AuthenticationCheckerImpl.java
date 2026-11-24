@@ -1,6 +1,7 @@
 package com.wety.demo.module.user.support;
 
 import cn.hutool.crypto.digest.MD5;
+import com.wety.demo.common.constant.GlobalConst;
 import com.wety.demo.common.entity.AccountEntity;
 import com.wety.demo.common.entity.AccountEntityRepository;
 import com.wety.demo.common.entity.AccountSessionEntity;
@@ -46,11 +47,15 @@ public class AuthenticationCheckerImpl implements AuthenticationChecker<AccountE
         String timestamp = request.getParameter("TIMESTAMP");
         String clientSign = request.getParameter("SIGN");
 
-        Optional<AccountEntity> accountEntityOptional = accountEntityRepository.findByLoginName(accountName);
+        Optional<AccountEntity> accountEntityOptional = accountEntityRepository.findByLoginNameAndDeleted(accountName, GlobalConst.NOT);
         if (!accountEntityOptional.isPresent()) {
             return null;
         }
         AccountEntity accountEntity = accountEntityOptional.get();
+        if (GlobalConst.DATA_STATUS_YES.equals(accountEntity.getDisabled())) {
+            log.warn("认证失败，账号已被禁用:{}", accountName);
+            return null;
+        }
 
         Optional<AccountSessionEntity> accountSessionEntityOptional = accountSessionRepository.findFirstByAccountCodeOrderByIdDesc(accountEntity.getCode());
         if (!accountSessionEntityOptional.isPresent()) {

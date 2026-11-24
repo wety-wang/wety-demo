@@ -23,6 +23,14 @@ public class LoginLogInfoVO {
     @ApiModelProperty("账户姓名")
     private String accountName;
 
+    /** 登录账号所属主部门编码。 */
+    @ApiModelProperty("登录账号所属主部门编码")
+    private String deptCode;
+
+    /** 登录账号所属主部门名称。 */
+    @ApiModelProperty("登录账号所属主部门名称")
+    private String deptName;
+
     @ApiModelProperty("登录时间")
     private Date operationTime;
 
@@ -51,6 +59,7 @@ public class LoginLogInfoVO {
         this.accountCode = entity.getAccountCode();
         this.accountLoginName = entity.getAccountLoginName();
         this.accountName = entity.getAccountName();
+        this.deptCode = entity.getDeptCode();
         this.operationTime = entity.getOperationTime();
         this.result = entity.getResult();
         this.description = entity.getDescription();
@@ -82,6 +91,22 @@ public class LoginLogInfoVO {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     public Date getOperationTime() {

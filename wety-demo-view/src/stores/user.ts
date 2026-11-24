@@ -10,11 +10,21 @@ import { DYNAMIC_LOAD_WAY, DynamicLoadEnum } from '~@/utils/constant'
 export const useUserStore = defineStore('user', () => {
   const routerData = shallowRef()
   const menuData = shallowRef<MenuData>([])
-  const userInfo = shallowRef<{ id: number | string, username: string, nickname: string, avatar: string, roles?: (string | number)[] }>()
+  const userInfo = shallowRef<{
+    id: number | string
+    username: string
+    nickname: string
+    avatar: string
+    superAdmin?: number
+    primaryDeptCode?: string
+    primaryDeptName?: string
+    roles?: (string | number)[]
+  }>()
   const token = useAuthorization()
   const avatar = computed(() => userInfo.value?.avatar)
   const nickname = computed(() => userInfo.value?.nickname ?? userInfo.value?.username)
   const roles = computed(() => userInfo.value?.roles)
+  const isSuperAdmin = computed(() => userInfo.value?.superAdmin === 1)
 
   const getMenuRoutes = async () => {
     // 后端菜单接口回退机制: 如果后端未提供菜单接口或请求失败，则回退到前端静态路由
@@ -74,6 +84,9 @@ export const useUserStore = defineStore('user', () => {
       username: data?.loginName,
       nickname: data?.userName,
       avatar: '',
+      superAdmin: data?.superAdmin,
+      primaryDeptCode: data?.primaryDeptCode,
+      primaryDeptName: data?.primaryDeptName,
       roles: data?.permissionCodes ?? data?.roleCodes ?? [],
     }
   }
@@ -95,6 +108,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     userInfo,
     roles,
+    isSuperAdmin,
     getUserInfo,
     logout,
     routerData,

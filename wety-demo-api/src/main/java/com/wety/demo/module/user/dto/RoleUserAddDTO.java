@@ -29,6 +29,10 @@ public class RoleUserAddDTO {
         return accountCodes;
     }
 
+    public void setAccountCodes(List<String> accountCodes) {
+        this.accountCodes = accountCodes;
+    }
+
     public void setAccountCode(List<String> accountCodes) {
         this.accountCodes = accountCodes;
     }

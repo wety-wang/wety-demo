@@ -8,6 +8,8 @@ export interface OperationLogInfoVO {
   accountCode?: string
   accountLoginName?: string
   accountName?: string
+  deptCode?: string
+  deptName?: string
   clientIp?: string
   operationTime?: string
   operationType?: string

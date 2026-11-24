@@ -122,10 +122,12 @@ public class UserOperationLogAop implements ApplicationContextAware {
                     operationLogAddDTO.setAccountCode(currentAccount.getCode());
                     operationLogAddDTO.setAccountLoginName(currentAccount.getLoginName());
                     operationLogAddDTO.setAccountName(currentAccount.getUserName());
+                    operationLogAddDTO.setDeptCode(currentAccount.getPrimaryDeptCode());
                 } else {
                     operationLogAddDTO.setAccountCode("-");
                     operationLogAddDTO.setAccountLoginName("-");
                     operationLogAddDTO.setAccountName("-");
+                    operationLogAddDTO.setDeptCode(null);
                 }
 
                 operationLogAddDTO.setClientIp(AppThreadLocal.getInstance().getClientIp());

@@ -5,6 +5,8 @@ export interface LoginLogInfoVO {
   accountCode?: string
   accountLoginName?: string
   accountName?: string
+  deptCode?: string
+  deptName?: string
   operationTime?: string
   result?: string
   description?: string

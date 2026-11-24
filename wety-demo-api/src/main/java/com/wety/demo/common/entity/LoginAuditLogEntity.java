@@ -35,6 +35,11 @@ public class LoginAuditLogEntity {
     @Column(name = "account_name")
     private String accountName;
 
+    /** 登录账号所属主部门编码，用于数据权限过滤。 */
+    @ApiModelProperty("登录账号所属主部门编码")
+    @Column(name = "dept_code", length = 40)
+    private String deptCode;
+
     @ApiModelProperty("登录/登出时间")
     @Column(name = "operation_time")
     private Date operationTime;
@@ -101,6 +106,14 @@ public class LoginAuditLogEntity {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
     }
 
     public Date getOperationTime() {

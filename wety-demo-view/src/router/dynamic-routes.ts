@@ -393,30 +393,48 @@ export default [
       },
     ],
   },
-  // 用户管理
+  // 组织架构
   {
-    path: '/user-manage',
-    redirect: '/user-manage/user',
-    name: 'UserManage',
+    path: '/org',
+    redirect: '/org/dept',
+    name: 'Org',
     meta: {
-      title: '用户管理',
-      icon: 'UserOutlined',
+      title: '组织架构',
+      icon: 'ApartmentOutlined',
     },
     component: basicRouteMap.RouteView,
     children: [
       {
-        path: '/user-manage/user',
-        name: 'UserManageUserManage',
-        component: () => import('~/pages/user-manage/user/index.vue'),
+        path: '/org/dept',
+        name: 'OrgDeptManage',
+        component: () => import('~/pages/org/dept/index.vue'),
+        meta: {
+          title: '部门管理',
+          keepAlive: true,
+        },
+      },
+      {
+        path: '/org/position',
+        name: 'OrgPositionManage',
+        component: () => import('~/pages/org/position/index.vue'),
+        meta: {
+          title: '岗位管理',
+          keepAlive: true,
+        },
+      },
+      {
+        path: '/org/user',
+        name: 'OrgUserManage',
+        component: () => import('~/pages/org/user/index.vue'),
         meta: {
           title: '用户管理',
           keepAlive: true,
         },
       },
       {
-        path: '/user-manage/role',
-        name: 'UserManageRoleManage',
-        component: () => import('~/pages/user-manage/role/index.vue'),
+        path: '/org/role',
+        name: 'OrgRoleManage',
+        component: () => import('~/pages/org/role/index.vue'),
         meta: {
           title: '角色管理',
           keepAlive: true,

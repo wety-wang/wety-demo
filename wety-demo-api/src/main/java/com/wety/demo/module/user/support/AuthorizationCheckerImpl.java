@@ -1,5 +1,6 @@
 package com.wety.demo.module.user.support;
 
+import com.wety.demo.common.constant.GlobalConst;
 import com.wety.demo.common.entity.AccountEntity;
 import com.wety.demo.common.entity.AccountEntityRepository;
 import com.wety.demo.core.annotation.PermissionHolder;
@@ -48,15 +49,16 @@ public class AuthorizationCheckerImpl implements AuthorizationChecker {
         }
 
         String requestingCode = requestingPermission.getCode();
-        Optional<AccountEntity> accountEntityOptional = accountEntityRepository.findByLoginName(accountName);
-        // 用户未登录，无权访问
+        Optional<AccountEntity> accountEntityOptional = accountEntityRepository.findByLoginNameAndDeleted(accountName, GlobalConst.NOT);
+        // 用户未登录或已删除，无权访问
         if (!accountEntityOptional.isPresent()) {
-            log.warn("用户未登录，无权访问");
+            log.warn("用户未登录或已删除，无权访问");
             return false;
         }
         AccountEntity accountEntity = accountEntityOptional.get();
-        if (AccountTypeConst.ADMIN.equals(accountEntity.getType())) {
-            // 超级管理员拥有所有权限
+        if (Integer.valueOf(1).equals(accountEntity.getSuperAdmin())
+                || AccountTypeConst.ADMIN.equals(accountEntity.getType())) {
+            // 内置超级管理员（兼容存量 admin 类型）拥有所有权限
             return true;
         }
 

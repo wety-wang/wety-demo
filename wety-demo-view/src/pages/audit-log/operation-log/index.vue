@@ -27,6 +27,7 @@ const columns: TableColumnType<OperationLogInfoVO>[] = [
   { title: '序号', dataIndex: 'index', width: 80, customRender: ({ index }) => h('span', null, { default: () => index + 1 }) },
   { title: '模块', dataIndex: 'modelName', width: 120, key: 'modelName' },
   { title: '操作人', dataIndex: 'accountCode', width: 180, key: 'accountCode', customRender: ({ record }) => h('span', null, { default: () => `${record.accountName}(${record.accountLoginName})` }) },
+  { title: '所属部门', dataIndex: 'deptName', width: 140, key: 'deptName', customRender: ({ text }) => text || '-' },
   { title: '客户端IP', dataIndex: 'clientIp', width: 120, key: 'clientIp' },
   {
     title: '操作类型',

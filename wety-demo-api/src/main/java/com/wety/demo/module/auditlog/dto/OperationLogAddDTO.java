@@ -46,6 +46,10 @@ public class OperationLogAddDTO {
     @ApiModelProperty("登录账号用户名")
     private String accountName;
 
+    /** 操作人所属主部门编码，用于数据权限过滤。 */
+    @ApiModelProperty("操作人所属主部门编码")
+    private String deptCode;
+
     @ApiModelProperty("客户端IP")
     private String clientIp;
 
@@ -156,6 +160,14 @@ public class OperationLogAddDTO {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
     }
 
     public String getClientIp() {
