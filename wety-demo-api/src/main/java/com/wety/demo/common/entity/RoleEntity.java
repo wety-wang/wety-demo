@@ -1,0 +1,88 @@
+package com.wety.demo.common.entity;
+
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+ * @author wety
+ */
+@Entity(name = "role")
+public class RoleEntity {
+
+    @ApiModelProperty(value = "数据主键，修改操作时必须带着", example = "1")
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ApiModelProperty(value = "角色内部用code，修改操作时必须带着", example = "4601b43274e64b45a95cfcd15fcd9660")
+    @Column(name = "code")
+    private String code;
+
+    @ApiModelProperty(value = "角色名称")
+    @Column(name = "name")
+    private String name;
+
+    @ApiModelProperty(value = "是否删除 1已删除，0未删除", example = "")
+    @Column(name = "deleted")
+    private Integer deleted;
+
+    @ApiModelProperty(hidden = true, value = "创建时间")
+    @Column(name = "create_time")
+    private Date createTime;
+
+    @ApiModelProperty(hidden = true, value = "更新时间")
+    @Column(name = "update_time")
+    private Date updateTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+}

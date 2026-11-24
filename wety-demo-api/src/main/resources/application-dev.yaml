@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    # TODO 更换数据库地址和库名
+    url: jdbc:mysql://127.0.0.1:3306/wety_demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+# 应用配置
+application:
+  swagger:
+    # swagger是否开启: on/off
+    switch: on
+  authentication:
+    # 认证拦截是否开启: on/off
+    switch: on
+    # 免拦截接口 逗号隔开
+    exclude:
+      urls:
+    session:
+      # session超时时间（毫秒），30分钟
+      timeoutmillis: 1800000
+    request:
+      timestamp:
+        # 认证请求的时间戳容忍时间（毫秒），默认 5 分钟；用于防止重放攻击
+        tolerance-millis: 300000
+  authorization:
+    # 鉴权拦截是否开启: on/off
+    switch: off
+  filter:
+    # 过滤器匹配的 URL Pattern，可按需调整
+    pattern: /bac/*
+  upload:
+    host: http://127.0.0.1:${server.port}

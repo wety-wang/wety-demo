@@ -1,0 +1,24 @@
+logging:
+  config: classpath:log4j.xml
+  level:
+    root: info # 在这里指定日志级别，可覆盖log4j.xml中的配置
+    org.hibernate.SQL: info #只有是debug级别时，才输出sql
+    org.hibernate.type.descriptor.sql.BasicBinder: trace #只有是trace级别时，才输出参数
+
+server:
+  # TODO 更换系统端口
+  port: 6676
+  tomcat:
+    basedir: /tmp
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      # 必须带单位，避免在不同环境下解析失败（如默认按字节解析）
+      max-file-size: 200MB
+      max-request-size: 200MB

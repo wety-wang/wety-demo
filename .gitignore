@@ -1,0 +1,28 @@
+### OS ###
+.DS_Store
+Thumbs.db
+
+### IDE ###
+.claude/
+.trae/
+.workbuddy/
+.qoder/
+.vscode/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Vue.js ###
+dist/
+node_modules/
+
+### Java ###
+target/
+
+### log ###
+/logs/
+
+### other ###
