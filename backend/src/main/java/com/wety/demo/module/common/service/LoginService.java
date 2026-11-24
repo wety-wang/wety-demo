@@ -183,6 +183,8 @@ public class LoginService {
      */
     public void checkImage(String checkCode, HttpSession session) {
         String sessionCode = (String) session.getAttribute(GlobalConst.IMAGE_CODE);
+        // 验证码仅允许使用一次，校验时立即从会话中移除，避免失败后被重复使用
+        session.removeAttribute(GlobalConst.IMAGE_CODE);
         // 当验证码为空或不匹配时抛错；匹配时通过
         if (StringUtils.isBlank(sessionCode) || !sessionCode.equalsIgnoreCase(checkCode)) {
             throw new CustomException("验证码输入错误");

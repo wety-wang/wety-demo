@@ -12,6 +12,7 @@
 
 - [2026-11-24-组织架构与数据权限](2026-11-24-组织架构与数据权限/task_plan.md)：组织架构（部门/岗位/用户/角色）与角色数据权限核心引擎升级。
 - [2026-11-24-java21-springboot35-upgrade](2026-11-24-java21-springboot35-upgrade/task_plan.md)：后端 `wety-demo-api` 升级至 JDK 21 与 Spring Boot 3.5.16（含 Jakarta EE、OpenAPI 3 / Knife4j 4 与 Hibernate 6 适配）。
+- [2026-11-24-登录失败验证码刷新](2026-11-24-登录失败验证码刷新/task_plan.md)：修复登录失败后前端验证码不刷新及后端会话验证码未单次失效的问题。
 
 ## 历史按月归档（`archive/`）
 

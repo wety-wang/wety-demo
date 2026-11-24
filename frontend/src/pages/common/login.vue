@@ -35,9 +35,10 @@ const captchaTs = ref(Date.now())
 const captchaBase = import.meta.env.VITE_APP_BASE_API
 // 计算验证码图片地址（携带时间戳以避免浏览器缓存）
 const captchaUrl = computed(() => `${captchaBase}/bac/common/getVerifyImage?ts=${captchaTs.value}`)
-// 刷新验证码：更新时间戳即可重新拉取图片
+// 刷新验证码：更新时间戳即可重新拉取图片（确保同一毫秒内重复触发也能更新）
 function refreshCaptcha() {
-  captchaTs.value = Date.now()
+  const now = Date.now()
+  captchaTs.value = now === captchaTs.value ? now + 1 : now
 }
 const { counter, pause, reset, resume, isActive } = useInterval(1000, {
   controls: true,
@@ -62,6 +63,7 @@ async function getCode() {
 
 async function submit() {
   submitLoading.value = true
+  let loginAttempted = false
   try {
     await formRef.value?.validate()
     let params: LoginParams | LoginMobileParams
@@ -81,6 +83,7 @@ async function submit() {
         type: 'mobile',
       } as unknown as LoginMobileParams
     }
+    loginAttempted = true
     const data = await loginApi(params)
     // 登录成功：写入 token 与账户名（供签名使用）
     token.value = data?.token
@@ -101,6 +104,12 @@ async function submit() {
   catch (e) {
     if (e instanceof AxiosError)
       errorAlert.value = true
+
+    // 账号密码登录请求失败后刷新图形验证码并清空已输入验证码，避免旧验证码失效或被重复使用
+    if (loginAttempted && loginModel.type === 'account') {
+      loginModel.checkCode = ''
+      refreshCaptcha()
+    }
 
     submitLoading.value = false
   }
