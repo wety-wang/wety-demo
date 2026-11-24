@@ -48,7 +48,7 @@ flowchart LR
 
 ### 3.3 数据与文件
 
-数据库初始化脚本位于 `wety-demo-api/deploy/sql/db-init-ddl.sql`。核心表包括：
+数据库初始化脚本位于 `wety-demo-api/deploy/sql/init-db.sql`。核心表包括：
 
 | 表 | 用途 |
 | --- | --- |

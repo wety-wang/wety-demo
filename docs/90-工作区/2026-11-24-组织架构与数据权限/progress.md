@@ -5,7 +5,7 @@
 - [x] 完成现有代码库、SQL 脚本、JPA 基础设施、权限体系与异常机制调研。
 - [x] 创建工作区过程三件套（`task_plan.md`、`findings.md`、`progress.md`）并更新 `docs/90-工作区/README.md`。
 - [x] 编写正式设计方案与前后端 API 契约文档 `docs/01-组织架构与数据权限/02-设计/组织架构与数据权限设计方案.md` 并更新 `docs/README.md`。
-- [x] 更新 `wety-demo-api/deploy/sql/db-init-ddl.sql` 与新增增量迁移脚本 `wety-demo-api/deploy/sql/db-migrate-org-datascope.sql`。
+- [x] 更新 `wety-demo-api/deploy/sql/init-db.sql` 与新增增量迁移脚本 `wety-demo-api/deploy/sql/db-migrate-org-datascope.sql`。
 - [x] 新增 5 组组织架构/数据权限 Entity 与 Repository，改造 4 个存量 Entity 并增强 3 个存量 Repository。
 - [x] 在 `com.wety.demo.core.datascope` 实现数据权限核心引擎（`DataScopeEnum`、`@DataScope`、`DataScopeContext`、`DataScopeResolver`、`DataScopeAspect`、`DataScopeChecker`），并增强 `AppThreadLocal` 与 `BaseRepositoryImpl`。
 
@@ -39,7 +39,7 @@
 - 规范与工作区核查：仓库根目录不存在 `task_plan.md`/`findings.md`/`progress.md`，过程三件套均位于 `docs/90-工作区/2026-11-24-组织架构与数据权限/`，无敏感信息或调试代码残留。
 
 ### 4. 仍需人工关注的风险与上线事项
-1. **数据库迁移执行**：存量环境上线前须在目标 MySQL 库执行 `wety-demo-api/deploy/sql/db-migrate-org-datascope.sql`（新库使用 `db-init-ddl.sql`），并核对默认根部门 `dept-root` 与内置超管 `admin` 的 `super_admin = 1`、`primary_dept_code = 'dept-root'` 初始化状态。
+1. **数据库迁移执行**：存量环境上线前须在目标 MySQL 库执行 `wety-demo-api/deploy/sql/db-migrate-org-datascope.sql`（新库使用 `init-db.sql`），并核对默认根部门 `dept-root` 与内置超管 `admin` 的 `super_admin = 1`、`primary_dept_code = 'dept-root'` 初始化状态。
 2. **鉴权开关核查**：确认生产环境配置 `application.authorization.switch=true`（`AuthorizationFilter` 生效条件），避免开发配置误带入生产导致接口鉴权未开启。
 3. **运行环境 JDK 版本**：项目后端目标为 Java 8，`com.antherd:sm-crypto:0.3.2` 依赖 JDK 8 内置 Nashorn 引擎；若未来升级至 JDK 15+，需替换 SM2 实现（如 BouncyCastle）避免 `ScriptEngine` 为空。
 4. **历史权限码数据**：既有角色若绑定了旧版 `101-xx-xx`（旧“用户管理”）权限码，升级后需在“组织架构 -> 角色管理”重新核对并授予新版菜单权限码及数据权限范围。

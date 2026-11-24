@@ -73,9 +73,9 @@ Entity -> DAO -> Service -> Controller
 - DAO 只负责持久化访问，不承载业务规则。
 - 不得直接把 Entity 暴露给前端。
 
-## 6. Controller 接口规范（强制）
+## 4. Controller 接口规范（强制）
 
-### 6.1 接口映射注解及 HTTP 方法限制
+### 4.1 接口映射注解及 HTTP 方法限制
 
 Controller 接口只允许使用以下三种 Spring MVC 映射注解：
 
@@ -123,7 +123,7 @@ Controller 接口只允许使用以下三种 Spring MVC 映射注解：
 @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 ```
 
-### 6.2 请求必须使用 DTO，返回必须使用 VO
+### 4.2 请求必须使用 DTO，返回必须使用 VO
 
 - Controller 的业务请求数据必须使用 DTO 接收。
 - Controller 的业务返回数据必须使用 VO 返回。
@@ -133,7 +133,7 @@ Controller 接口只允许使用以下三种 Spring MVC 映射注解：
 - 新增、更新、删除等操作也应返回明确的 VO，例如 `XxxOperationVo`、`XxxDetailVo`，不得用临时 Map 拼装结果。
 - 文件下载、流式输出等无法使用普通 VO 表达的接口，可以使用 `ResponseEntity<Resource>`、`StreamingResponseBody` 等明确类型，但必须在方法注释中说明原因，且仍禁止使用 Map。
 
-### 6.3 参数绑定规则
+### 4.3 参数绑定规则
 
 - 禁止使用 `@PathVariable`。
 - POST 类请求使用 `@Valid @RequestBody XxxDto`。
@@ -141,7 +141,7 @@ Controller 接口只允许使用以下三种 Spring MVC 映射注解：
 - 复杂列表查询统一使用 POST，并通过 `@RequestBody` 接收查询 DTO。
 - 所有外部输入必须进行 Bean Validation 校验。
 
-### 6.4 Controller 示例
+### 4.4 Controller 示例
 
 ```java
 /**
@@ -195,9 +195,9 @@ public class ProductController {
 
 统一响应包装由 `GlobalResponseAdvice` 处理，Controller 仅返回业务 VO，不得重复手工包装统一响应对象，除非现有接口明确要求。
 
-## 7. 命名规范
+## 5. 命名规范
 
-### 7.1 类命名
+### 5.1 类命名
 
 - Entity：以 `Entity` 结尾，例如 `ProductEntity`。
 - DAO：以 `Dao` 结尾，例如 `ProductDao`。
@@ -207,7 +207,7 @@ public class ProductController {
 - VO：以 `Vo` 结尾，例如 `ProductListVo`、`ProductDetailVo`。
 - 枚举：以 `Enum` 结尾，例如 `ProductStatusEnum`；枚举值使用全大写加下划线。
 
-### 7.2 方法命名
+### 5.2 方法命名
 
 - Controller：`list`、`get`、`add`、`update`、`delete`。
 - Service 查询：`query`、`get`、`findXxx`。
@@ -216,7 +216,7 @@ public class ProductController {
 
 方法名称必须表达真实业务含义。复杂业务动作不得全部使用模糊的 `handle`、`process`、`execute`。
 
-### 7.3 变量与常量
+### 5.3 变量与常量
 
 - 变量使用小驼峰命名，含义清晰，禁止无意义缩写。
 - 常量使用全大写加下划线，例如 `DEFAULT_PAGE_SIZE`。
@@ -224,7 +224,7 @@ public class ProductController {
 - JavaBean getter 可按框架约定生成，例如 `isDeleted()`；“禁止 `is` 前缀”仅针对字段和数据库列命名。
 - 禁止魔法数字和魔法字符串；应使用常量或枚举表达业务含义。
 
-## 8. Service 与事务规范
+## 6. Service 与事务规范
 
 - Service 类默认使用 `@Transactional(readOnly = true)`。
 - 新增、更新、删除等写操作方法使用：
@@ -238,9 +238,9 @@ public class ProductController {
 - 多步骤状态变更必须保证原子性，并清楚处理重复请求、并发更新和幂等性。
 - 不得捕获异常后静默忽略；需要转换异常时，必须保留原始异常作为 cause。
 
-## 9. DAO 与 JPA 规范
+## 7. DAO 与 JPA 规范
 
-### 9.1 DAO
+### 7.1 DAO
 
 - 必须使用参数化查询，禁止拼接 SQL 或 JPQL。
 - 查询方法返回类型必须明确，避免滥用原始 `Object[]`；复杂结果应使用投影、DTO 或明确接口。
@@ -253,7 +253,7 @@ public class ProductController {
 Optional<ProductEntity> findAvailableByCode(@Param("code") String code);
 ```
 
-### 9.2 Entity
+### 7.2 Entity
 
 - Entity 至少使用 `@Entity` 和 `@Table`。
 - `@DynamicInsert`、`@DynamicUpdate` 仅在确有动态 SQL 或数据库默认值需求时使用，不得机械添加到所有实体。
@@ -267,11 +267,10 @@ Optional<ProductEntity> findAvailableByCode(@Param("code") String code);
 - 新代码优先使用 `LocalDateTime`；仅在实体字段使用旧版 `Date` 或 `Calendar` 时使用 `@Temporal`。
 - Entity 之间原则上不建立复杂双向对象关联；表关联关系按项目约定通过业务 code 维护。
 - 所有正常业务查询必须过滤软删除数据。
-- Entity 字段映射必须与数据库 DDL（`deploy/sql/db-init-ddl.sql` 及增量迁移脚本）严格逐一对齐：所有 `VARCHAR` 长度（如 `length = 40`/`1000`/`2048`）、非空约束（`nullable = false`）以及 `TINYINT`/`LONGTEXT` 等列类型（`columnDefinition`）均需在 `@Column` 中显式声明一致，避免 Hibernate `ddl-auto: update` 启动时自动修改表结构。
 
-## 10. DTO、VO 与对象转换规范
+## 8. DTO、VO 与对象转换规范
 
-### 10.1 DTO
+### 8.1 DTO
 
 - DTO 仅承载请求数据和服务入参，不包含持久化逻辑。
 - 根据接口用途拆分 `QueryDto`、`AddDto`、`UpdateDto`、`DeleteDto`，不得用一个万能 DTO 覆盖所有场景。
@@ -292,22 +291,22 @@ public class ProductAddDto {
 }
 ```
 
-### 10.2 VO
+### 8.2 VO
 
 - VO 只暴露前端真正需要的字段。
 - VO 不得包含 JPA 懒加载代理、内部主键、密码、Token、密钥、内部异常堆栈等敏感或内部字段。
 - 金额、时间、状态等字段的格式必须与项目现有接口保持一致。
 - 不得通过 Map 临时拼装 VO；应创建命名明确的 VO 类。
 
-### 10.3 对象转换
+### 8.3 对象转换
 
 - 优先复用项目已有转换器、构造方法或工厂方法。
 - 转换逻辑较多时，提取为独立 Converter/Assembler，不得在 Controller 中逐字段拼装。
 - 使用反射式复制工具前必须检查字段语义和类型，禁止因字段同名而盲目复制敏感字段或内部字段。
 
-## 11. 代码逻辑与注释规范（强制）
+## 9. 代码逻辑与注释规范（强制）
 
-### 11.1 逻辑清晰
+### 9.1 逻辑清晰
 
 - 每个方法只负责一个清晰职责。
 - 优先使用提前返回和守卫语句，避免多层嵌套。
@@ -317,7 +316,7 @@ public class ProductAddDto {
 - 不得保留注释掉的大段旧代码、临时调试代码、无效分支或未使用变量。
 - 对状态流转、金额计算、权限判断、分佣规则、异步任务等关键业务逻辑，应显式表达前置条件、计算依据和结果。
 
-### 11.2 注释齐全且有意义
+### 9.2 注释齐全且有意义
 
 - 所有类、公共方法、DTO/VO/Entity 业务字段必须添加 Javadoc。
 - 复杂私有方法、关键业务分支、非显而易见的算法、兼容性处理和异常兜底必须添加注释。
@@ -343,7 +342,7 @@ public List<CommissionDetailVo> calculateCommission(String orderCode) {
 }
 ```
 
-## 12. 日志与异常规范
+## 10. 日志与异常规范
 
 - 使用参数化日志，禁止字符串直接拼接。
 - ERROR：系统异常、不可恢复错误，必须记录异常对象以保留堆栈。
@@ -360,7 +359,7 @@ log.info("开始更新产品，productCode: {}", dto.getCode());
 log.error("更新产品失败，productCode: {}", dto.getCode(), exception);
 ```
 
-## 13. 安全规范
+## 11. 安全规范
 
 - Controller 入参必须执行 Bean Validation。
 - Service 必须校验当前用户、租户、数据归属和操作权限，不能只依赖前端传参。
@@ -372,9 +371,9 @@ log.error("更新产品失败，productCode: {}", dto.getCode(), exception);
 - 外部 API、AI 返回内容和反序列化数据都视为不可信输入，使用前必须校验。
 - 错误响应不得暴露堆栈、SQL、服务器路径、内部 IP、密钥或框架敏感信息。
 
-## 14. 数据库设计规范
+## 12. 数据库设计规范
 
-### 14.1 核心原则
+### 12.1 核心原则
 
 - `id`：数据库自增主键，仅用于数据库内部，不参与对外业务逻辑。
 - `code`：业务唯一标识，类型统一为 `VARCHAR(40)`。
@@ -385,7 +384,7 @@ log.error("更新产品失败，productCode: {}", dto.getCode(), exception);
 - 每张业务表至少包含：`id`、`code`、`create_time`、`update_time`、`deleted`。
 - 新增表和字段必须添加 COMMENT。
 
-### 14.2 命名与类型
+### 12.2 命名与类型
 
 - 表名、字段名使用全小写加下划线。
 - 时间字段使用 `_time` 后缀。
@@ -394,14 +393,14 @@ log.error("更新产品失败，productCode: {}", dto.getCode(), exception);
 - 金额使用 `DECIMAL(P,S)`，禁止使用浮点类型。
 - 枚举字段使用整数类型，并在 COMMENT 中完整说明取值。
 
-### 14.3 索引
+### 12.3 索引
 
 - 业务唯一字段添加唯一索引：`uk_表名_字段名`。
 - 常用查询字段添加普通索引：`idx_表名_字段名`。
 - 复合索引按实际查询的最左前缀设计，不得为所有字段机械建索引。
 - 软删除条件高频出现时，结合查询模式评估是否加入复合索引。
 
-### 14.4 标准表结构示例
+### 12.4 标准表结构示例
 
 ```sql
 CREATE TABLE xxx_template (
@@ -426,7 +425,17 @@ CREATE TABLE xxx_template (
 - 数据库结构变更必须提供可审查的 SQL 或迁移脚本。
 - 未经明确授权，不得执行 `DROP`、`TRUNCATE`、全表 `DELETE` 或不可逆数据更新。
 
-## 15. 性能规范
+### 12.5 SQL 脚本存储与变更规范
+
+- 所有数据库初始化、结构变更、数据迁移及回滚 SQL 脚本统一存放在 `backend/deploy/sql/` 目录下，禁止散落在业务模块目录或其他位置。
+- 目录组织与命名约定：
+    - **全量初始化脚本**：`backend/deploy/sql/init-db.sql`，新环境首次建库建表使用（字符集统一为 `utf8mb4`、`utf8mb4_general_ci`）。
+    - **增量升级脚本**：`backend/deploy/sql/upgrade-v<序号>-<简短主题>.sql`（例如 `upgrade-v1-init-maintenance.sql`、`upgrade-v2-device-alarm.sql`），按版本序号递增，禁止修改已上线执行的旧升级脚本。
+    - **回滚脚本**：`backend/deploy/sql/rollback-v<序号>-<简短主题>.sql`，涉及破坏性或高风险变更时与对应 `upgrade-*` 脚本成对提供。
+    - **SQL 验证脚本**：`backend/deploy/sql/tests/`（按需存放迁移校验或回归 SQL）。
+      - 每次新增或变更表结构（包括调整字段、索引、字典/初始化数据）时，必须同步在 `backend/deploy/sql/` 下补充对应的 `upgrade-v*` 脚本，并视需要同步更新 `backend/deploy/sql/init-db.sql` 基线；脚本需保证幂等性或明确前置版本，禁止仅依赖 Hibernate `ddl-auto: update` 自动改表而遗漏 SQL 沉淀。
+
+## 13. 性能规范
 
 - 大数据量查询必须分页，禁止无条件全表扫描和全量加载。
 - 避免循环内逐条访问数据库。
@@ -436,7 +445,7 @@ CREATE TABLE xxx_template (
 - 外部 API 和 AI 调用必须配置超时、错误处理和必要的降级策略。
 - 异步任务必须可追踪状态、失败原因和重试边界，避免无限重试。
 
-## 16. 前端编码规范
+## 14. 前端编码规范
 
 - 使用 Vue 3 Composition API，并遵循现有组件组织方式。
 - 页面组件不得直接散落 Axios 请求；统一通过 `src/services/` 调用后端。
@@ -447,7 +456,7 @@ CREATE TABLE xxx_template (
 - 不得在前端存储密钥、数据库凭证或服务端私密配置。
 - 修改页面后至少执行对应模块的生产构建；若存在 lint、test、type-check 脚本，同时执行。
 
-## 17. 测试规范
+## 15. 测试规范
 
 - 新增业务逻辑必须补充测试；修复缺陷必须优先增加可复现缺陷的回归测试。
 - Service 纯业务逻辑优先使用单元测试，不应为所有简单逻辑都启动完整 Spring 容器。
@@ -458,7 +467,7 @@ CREATE TABLE xxx_template (
 - 外部 API、AI、文件存储等依赖在单元测试中应使用 mock 或 stub。
 - 不得通过删除测试、降低断言或永久跳过测试来让构建通过。
 
-## 18. 完成标准（Definition of Done）
+## 16. 完成标准（Definition of Done）
 
 任务完成前必须检查：
 
@@ -469,12 +478,13 @@ CREATE TABLE xxx_template (
 - [ ] 关键逻辑结构清晰，类、公共方法和业务字段注释完整且与实现一致。
 - [ ] 参数校验、权限、租户隔离、异常和日志处理完整。
 - [ ] 数据库查询无明显 N+1、全表扫描或事务边界问题。
+- [ ] 若涉及表结构或初始化数据变更，已在 `backend/sql/` 补充对应 `upgrade-v*`（及必要时的 `rollback-v*`）脚本并更新 `init-db.sql`。
 - [ ] 已补充或更新必要测试。
 - [ ] 已执行相关编译、测试、Lint、类型检查或构建，并记录结果。
 - [ ] 最终 diff 不包含敏感信息、调试代码、死代码和无关变更。
 - [ ] 无法执行的验证已明确说明原因和风险，不得声称未执行的检查已通过。
 
-## 19. 代码审查重点
+## 17. 代码审查重点
 
 进行代码审查时，优先检查以下问题：
 

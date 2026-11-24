@@ -11,7 +11,7 @@
    - 编写正式设计文档 `docs/01-组织架构与数据权限/02-设计/组织架构与数据权限设计方案.md`，定义数据模型、权限码体系、数据权限引擎设计及完整前后端 API 契约。
    - 更新 `docs/README.md` 需求索引。
 2. **数据库脚本**
-   - 更新全量初始化脚本 `wety-demo-api/deploy/sql/db-init-ddl.sql`。
+   - 更新全量初始化脚本 `wety-demo-api/deploy/sql/init-db.sql`。
    - 新增增量迁移脚本 `wety-demo-api/deploy/sql/db-migrate-org-datascope.sql`。
 3. **Entity 与 Repository**
    - 新增 `DeptEntity`、`PositionEntity`、`AccountDeptLinkEntity`、`AccountPositionLinkEntity`、`RoleDeptLinkEntity` 及其 Repository。
